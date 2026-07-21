@@ -1,0 +1,40 @@
+name: Release packages
+
+on:
+  workflow_run:
+    workflows: ["Quality and deploy"]
+    types: [completed]
+
+concurrency:
+  group: strawn-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+      - name: Install trusted-publishing npm version
+        run: npm install --global npm@11.5.1
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      - run: bun install --frozen-lockfile
+      - uses: changesets/action@v1
+        with:
+          version: bun run version-packages
+          publish: bun run release
+          title: "Release: Strawn packages"
+          commit: "Release Strawn packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

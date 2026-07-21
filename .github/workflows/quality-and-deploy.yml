@@ -1,0 +1,191 @@
+name: Quality and deploy
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: strawn-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  BUN_VERSION: 1.3.14
+  PLAYWRIGHT_BROWSERS_PATH: ~/.cache/ms-playwright
+
+jobs:
+  static:
+    name: Static contracts
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-${{ runner.arch }}-bun-${{ env.BUN_VERSION }}-${{ hashFiles('bun.lock') }}
+      - run: bun install --frozen-lockfile
+      - name: Lint, typecheck, generated files, API, and motion
+        run: |
+          time bun run icons:check
+          time bun run lint
+          time bun run typecheck
+          time bun run quality:api
+          time bun run quality:motion
+
+  unit:
+    name: Unit and accessibility
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-${{ runner.arch }}-bun-${{ env.BUN_VERSION }}-${{ hashFiles('bun.lock') }}
+      - run: bun install --frozen-lockfile
+      - run: time bun run test:unit
+
+  build:
+    name: Build and package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-${{ runner.arch }}-bun-${{ env.BUN_VERSION }}-${{ hashFiles('bun.lock') }}
+      - run: bun install --frozen-lockfile
+      - run: time bun run build
+      - run: time bun run quality:packages
+      - run: time bun run quality:bundle
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: |
+            apps/docs/dist
+            packages/strawn/dist
+            packages/strawn-icons/dist
+          if-no-files-found: error
+          retention-days: 3
+
+  browser-setup:
+    name: Prepare Chromium cache
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      playwright-version: ${{ steps.version.outputs.value }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-${{ runner.arch }}-bun-${{ env.BUN_VERSION }}-${{ hashFiles('bun.lock') }}
+      - run: bun install --frozen-lockfile
+      - id: version
+        name: Resolve exact Playwright version
+        run: echo "value=$(bunx playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+      - id: browser-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-${{ runner.arch }}-playwright-chromium-${{ steps.version.outputs.value }}-${{ hashFiles('bun.lock') }}
+      - if: steps.browser-cache.outputs.cache-hit != 'true'
+        run: bunx playwright install chromium
+
+  browser:
+    name: Browser (${{ matrix.project }})
+    needs: [build, browser-setup]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [functional, visual]
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-${{ runner.arch }}-bun-${{ env.BUN_VERSION }}-${{ hashFiles('bun.lock') }}
+      - run: bun install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: build-output
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-${{ runner.arch }}-playwright-chromium-${{ needs.browser-setup.outputs.playwright-version }}-${{ hashFiles('bun.lock') }}
+          fail-on-cache-miss: true
+      - name: Install Chromium system dependencies
+        run: bunx playwright install-deps chromium
+      - run: time bunx playwright test --project=${{ matrix.project }}
+
+  lighthouse:
+    name: Lighthouse
+    needs: [build, browser-setup]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-${{ runner.arch }}-bun-${{ env.BUN_VERSION }}-${{ hashFiles('bun.lock') }}
+      - run: bun install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: build-output
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-${{ runner.arch }}-playwright-chromium-${{ needs.browser-setup.outputs.playwright-version }}-${{ hashFiles('bun.lock') }}
+          fail-on-cache-miss: true
+      - name: Install Chromium system dependencies
+        run: bunx playwright install-deps chromium
+      - run: time bun run quality:lighthouse
+
+  deploy:
+    name: Deploy documentation
+    needs: [static, unit, build, browser, lighthouse]
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Trigger production deployment
+        env:
+          VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$VERCEL_DEPLOY_HOOK_URL" ]; then
+            echo "::error title=Missing Vercel secret::Configure VERCEL_DEPLOY_HOOK_URL for the Strawn documentation project."
+            exit 1
+          fi
+          curl --fail-with-body --silent --show-error --request POST "$VERCEL_DEPLOY_HOOK_URL"

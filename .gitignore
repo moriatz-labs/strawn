@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.turbo/
+.codex/
+*.tsbuildinfo
+
+.vercel/
+.lighthouseci/
+.cache/
+coverage/
+playwright-report/
+test-results/
+*.tgz

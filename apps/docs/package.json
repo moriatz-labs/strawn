@@ -1,0 +1,28 @@
+{
+  "name": "strawn-docs",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "predev": "bun run --cwd ../.. build:packages",
+    "dev": "vite",
+    "prebuild": "bun run --cwd ../.. build:packages",
+    "typecheck": "tsc --noEmit",
+    "build": "bun run typecheck && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource-variable/geist": "^5.2.9",
+    "@fontsource-variable/geist-mono": "^5.2.8",
+    "strawn": "workspace:*",
+    "strawn-icons": "workspace:*",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.13.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.0"
+  }
+}

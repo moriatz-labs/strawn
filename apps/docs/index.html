@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Strawn — Moriatz’s official design system." />
+    <meta property="og:title" content="Strawn" />
+    <meta property="og:description" content="Strawn — Moriatz’s official design system." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Strawn — Moriatz’s official design system</title>
+    <script>
+      (() => {
+        const key = "strawn-color-mode";
+        const stored = localStorage.getItem(key);
+        const preference = stored === "light" || stored === "dark" || stored === "system" ? stored : "system";
+        const mode = preference === "system"
+          ? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+          : preference;
+        document.documentElement.dataset.colorMode = mode;
+        document.documentElement.dataset.colorModePreference = preference;
+        document.documentElement.style.colorScheme = mode;
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
