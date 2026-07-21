@@ -10,16 +10,16 @@ type MarketingNavAction = {
   label: string;
   href: string;
   external?: boolean;
+  icon?: ReactNode;
 };
 
 type MarketingNavProps = {
   brand: ReactNode;
   items: MarketingNavItem[];
   action?: MarketingNavAction;
-  utility?: ReactNode;
 };
 
-export function MarketingNav({ brand, items, action, utility }: MarketingNavProps) {
+export function MarketingNav({ brand, items, action }: MarketingNavProps) {
   return (
     <header className="marketing-nav-shell">
       <div className="marketing-nav-container">
@@ -31,7 +31,6 @@ export function MarketingNav({ brand, items, action, utility }: MarketingNavProp
             ))}
           </nav>
           <div className="marketing-nav-actions">
-            {utility}
             {action ? (
               <a
                 className="marketing-nav-action"
@@ -39,6 +38,7 @@ export function MarketingNav({ brand, items, action, utility }: MarketingNavProp
                 target={action.external ? "_blank" : undefined}
                 rel={action.external ? "noreferrer" : undefined}
               >
+                {action.icon}
                 {action.label}
               </a>
             ) : null}

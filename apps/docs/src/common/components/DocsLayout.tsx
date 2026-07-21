@@ -1,6 +1,6 @@
 import { NavLink, Route, Routes } from "react-router-dom";
+import { GitHubIcon } from "strawn-icons";
 import { MarketingNav } from "./MarketingNav";
-import { ThemeToggle } from "./ThemeToggle";
 import { ComponentsPage } from "../../features/components/ComponentsPage";
 import { CsvImportDialogPage } from "../../features/csv/CsvImportDialogPage";
 import { HomePage } from "../../features/home/HomePage";
@@ -15,7 +15,6 @@ export function DocsLayout() {
         brand={(
           <NavLink className="brand" to="/" aria-label="Strawn home">
             <span className="brand-mark" aria-hidden="true" />
-            <span>Strawn</span>
           </NavLink>
         )}
         items={[
@@ -23,8 +22,12 @@ export function DocsLayout() {
           { label: "Icons", to: "/icons" },
           { label: "Theming", to: "/theming" },
         ]}
-        action={{ label: "GitHub", href: "https://github.com/moriatz-labs/strawn", external: true }}
-        utility={<ThemeToggle />}
+        action={{
+          label: "GitHub",
+          href: "https://github.com/moriatz-labs/strawn",
+          external: true,
+          icon: <GitHubIcon aria-hidden="true" size={16} />,
+        }}
       />
       <main id="main" className="page-shell">
         <Routes>
