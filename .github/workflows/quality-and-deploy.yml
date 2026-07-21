@@ -12,7 +12,7 @@ concurrency:
 
 env:
   BUN_VERSION: 1.3.14
-  PLAYWRIGHT_BROWSERS_PATH: ~/.cache/ms-playwright
+  PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/ms-playwright
 
 jobs:
   static:
@@ -107,7 +107,7 @@ jobs:
       - id: browser-cache
         uses: actions/cache@v4
         with:
-          path: ~/.cache/ms-playwright
+          path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
           key: ${{ runner.os }}-${{ runner.arch }}-playwright-chromium-${{ steps.version.outputs.value }}-${{ hashFiles('bun.lock') }}
       - if: steps.browser-cache.outputs.cache-hit != 'true'
         run: bunx playwright install chromium
@@ -135,11 +135,13 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: build-output
-      - uses: actions/cache/restore@v4
+      - id: browser-cache
+        uses: actions/cache/restore@v4
         with:
-          path: ~/.cache/ms-playwright
+          path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
           key: ${{ runner.os }}-${{ runner.arch }}-playwright-chromium-${{ needs.browser-setup.outputs.playwright-version }}-${{ hashFiles('bun.lock') }}
-          fail-on-cache-miss: true
+      - if: steps.browser-cache.outputs.cache-hit != 'true'
+        run: bunx playwright install chromium
       - name: Install Chromium system dependencies
         run: bunx playwright install-deps chromium
       - run: time bunx playwright test --project=${{ matrix.project }}
@@ -163,11 +165,13 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: build-output
-      - uses: actions/cache/restore@v4
+      - id: browser-cache
+        uses: actions/cache/restore@v4
         with:
-          path: ~/.cache/ms-playwright
+          path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
           key: ${{ runner.os }}-${{ runner.arch }}-playwright-chromium-${{ needs.browser-setup.outputs.playwright-version }}-${{ hashFiles('bun.lock') }}
-          fail-on-cache-miss: true
+      - if: steps.browser-cache.outputs.cache-hit != 'true'
+        run: bunx playwright install chromium
       - name: Install Chromium system dependencies
         run: bunx playwright install-deps chromium
       - run: time bun run quality:lighthouse
