@@ -6,8 +6,8 @@ const icons = { CalendarIcon, CheckIcon, CloseIcon, DownloadIcon, GitHubIcon, Li
 export function IconsPage() {
   return (
     <Stack gap="$8">
-      <header className="page-heading">
-        <TextStyle as="span" textStyle="eyebrow" tone="accent">strawn-icons</TextStyle>
+      <header className="page-heading centered-page-heading">
+        <TextStyle as="span" textStyle="eyebrow" tone="accent">List</TextStyle>
         <TextStyle as="h1" textStyle="headingLg">One coherent icon set.</TextStyle>
         <TextStyle as="p" textStyle="bodyLg" tone="muted">Named React exports, currentColor by default, and no catalog subpath.</TextStyle>
       </header>

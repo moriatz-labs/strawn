@@ -4,14 +4,14 @@ const exampleTheme = createTheme({ light: { colors: { primary: "#765092" } } });
 
 export function ThemingPage() {
   return (
-    <Stack gap="$8">
-      <header className="page-heading">
+    <Stack className="theming-page" gap="$8">
+      <header className="page-heading centered-page-heading">
         <TextStyle as="span" textStyle="eyebrow" tone="accent">Theming</TextStyle>
         <TextStyle as="h1" textStyle="headingLg">Tokens and styles live with the components.</TextStyle>
         <TextStyle as="p" textStyle="bodyLg" tone="muted">Extend the typed light and dark contracts, then pass the result to ThemeProvider.</TextStyle>
       </header>
       <Card>
-        <CardContent className="playground">
+        <CardContent className="playground theming-playground">
           <Button>Token-driven button</Button>
           <TextStyle as="p" tone="muted">Example primary: {exampleTheme.light.colors.primary}</TextStyle>
         </CardContent>

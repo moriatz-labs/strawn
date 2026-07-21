@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Badge, Box, Button, Card, CardContent, Stack, TextStyle } from "strawn";
+import { Box, Button, Card, CardContent, Stack, TextStyle } from "strawn";
 import { ArrowRightIcon } from "strawn-icons";
 
 export function HomePage() {
@@ -7,7 +7,6 @@ export function HomePage() {
   return (
     <Stack gap="$8">
       <section className="hero">
-        <Badge tone="success">Open source · MIT</Badge>
         <TextStyle as="h1" textStyle="headingXl">A focused design system for Moriatz products.</TextStyle>
         <TextStyle as="p" textStyle="bodyLg" tone="muted">
           Accessible React components, typed themes, and a coherent icon set in two small packages.
