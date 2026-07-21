@@ -8,7 +8,8 @@
   "files": [
     "dist",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
   ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -20,7 +21,7 @@
     }
   },
   "scripts": {
-    "build": "tsup && node ../../scripts/prepend-use-client.mjs dist/index.js",
+    "build": "tsup && node ../../scripts/prepare-stitches-declarations.mjs dist/index.d.ts node_modules/@stitches/react/types && node ../../scripts/prepend-use-client.mjs dist/index.js",
     "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\""
   },
   "dependencies": {
@@ -37,7 +38,7 @@
     "@radix-ui/react-toast": "^1.2.18",
     "@radix-ui/react-tooltip": "^1.2.11",
     "@stitches/react": "^1.2.8",
-    "strawn-icons": "workspace:^"
+    "strawn-icons": "0.0.0"
   },
   "peerDependencies": {
     "react": ">=18.2 <20",

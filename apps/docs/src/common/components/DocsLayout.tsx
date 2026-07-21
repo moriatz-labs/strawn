@@ -1,4 +1,5 @@
 import { NavLink, Route, Routes } from "react-router-dom";
+import { MarketingNav } from "./MarketingNav";
 import { ThemeToggle } from "./ThemeToggle";
 import { ComponentsPage } from "../../features/components/ComponentsPage";
 import { CsvImportDialogPage } from "../../features/csv/CsvImportDialogPage";
@@ -10,18 +11,21 @@ export function DocsLayout() {
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>
-      <header className="site-header">
-        <NavLink className="brand" to="/" aria-label="Strawn home">
-          <span className="brand-mark" aria-hidden="true">S</span>
-          <span>Strawn</span>
-        </NavLink>
-        <nav aria-label="Documentation">
-          <NavLink to="/components">Components</NavLink>
-          <NavLink to="/icons">Icons</NavLink>
-          <NavLink to="/theming">Theming</NavLink>
-        </nav>
-        <ThemeToggle />
-      </header>
+      <MarketingNav
+        brand={(
+          <NavLink className="brand" to="/" aria-label="Strawn home">
+            <span className="brand-mark" aria-hidden="true" />
+            <span>Strawn</span>
+          </NavLink>
+        )}
+        items={[
+          { label: "Components", to: "/components" },
+          { label: "Icons", to: "/icons" },
+          { label: "Theming", to: "/theming" },
+        ]}
+        action={{ label: "GitHub", href: "https://github.com/moriatz-labs/strawn", external: true }}
+        utility={<ThemeToggle />}
+      />
       <main id="main" className="page-shell">
         <Routes>
           <Route path="/" element={<HomePage />} />

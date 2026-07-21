@@ -34,7 +34,7 @@ bun run docs:dev
 bun run quality
 ```
 
-Releases are managed by Changesets and published from GitHub Actions with npm provenance.
+Releases are managed by Changesets and published from GitHub Actions with npm provenance. See [the release runbook](docs/RELEASING.md) for the one-time bootstrap and token-free trusted-publishing flow.
 
 ## License
 
