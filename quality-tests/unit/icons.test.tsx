@@ -6,7 +6,7 @@ import { iconCatalog } from "../../packages/strawn-icons/src/catalog";
 
 describe("strawn-icons", () => {
   it("renders every export as a decorative current-color SVG", () => {
-    expect(iconCatalog).toHaveLength(120);
+    expect(iconCatalog).toHaveLength(119);
     for (const { icon: Icon } of iconCatalog) {
       const { container, unmount } = render(<Icon />);
       const svg = container.querySelector("svg");

@@ -1,12 +1,13 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-const reviewPath = resolve(import.meta.dirname, "..", "packages", "strawn-icons", "BRAND_ICON_REVIEW.md");
-const review = readFileSync(reviewPath, "utf8");
+const packageRoot = resolve(import.meta.dirname, "..", "packages", "strawn-icons");
+const publicIndex = readFileSync(resolve(packageRoot, "src", "index.ts"), "utf8");
+const restrictedIcon = resolve(packageRoot, "src", "components", "LinkedInIcon.tsx");
 
-if (!/^Status: Approved$/m.test(review)) {
-  console.error("Release blocked: approve packages/strawn-icons/BRAND_ICON_REVIEW.md after reviewing LinkedIn redistribution terms.");
+if (publicIndex.includes("LinkedInIcon") || existsSync(restrictedIcon)) {
+  console.error("Release blocked: the restricted LinkedIn brand asset must not ship in strawn-icons.");
   process.exit(1);
 }
 
-console.log("Brand icon release review is approved.");
+console.log("Brand icon release review passed: the restricted LinkedIn asset is excluded.");

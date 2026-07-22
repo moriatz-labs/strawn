@@ -68,10 +68,9 @@ const definitions = Object.entries(groups).flatMap(([category, icons]) => icons.
 const brands = [
   { name: "GitHubIcon", category: "Brands", keywords: ["brand", "code", "repository"] },
   { name: "DevpostIcon", category: "Brands", keywords: ["brand", "hackathon"] },
-  { name: "LinkedInIcon", category: "Brands", keywords: ["brand", "professional", "network"] },
 ];
 
-if (definitions.length + brands.length !== 120) throw new Error(`Expected 120 icons, found ${definitions.length + brands.length}`);
+if (definitions.length + brands.length !== 119) throw new Error(`Expected 119 icons, found ${definitions.length + brands.length}`);
 
 function escapeAttribute(value) {
   return String(value).replaceAll("&", "&amp;").replaceAll('"', "&quot;");

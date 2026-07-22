@@ -118,4 +118,3 @@ export { PaletteIcon } from "./components/PaletteIcon.js";
 export { ZapIcon } from "./components/ZapIcon.js";
 export { GitHubIcon } from "./components/GitHubIcon.js";
 export { DevpostIcon } from "./components/DevpostIcon.js";
-export { LinkedInIcon } from "./components/LinkedInIcon.js";
