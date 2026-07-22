@@ -3,5 +3,3 @@
 Interface icon geometry is derived from Lucide 0.564.0 under the ISC License. Copyright © Lucide Contributors 2026; portions derived from Feather are copyright © Cole Bemis 2013–2026 under the MIT License. Permission is granted to use, copy, modify, and distribute the software with or without fee, provided the copyright and permission notice appear in all copies. The software is provided “as is” without warranty.
 
 GitHub and Devpost brand geometry is sourced from Simple Icons under CC0 1.0 Universal. Brand names and trademarks remain the property of their respective owners.
-
-The LinkedIn [in] logo is based on LinkedIn's approved brand asset. The LinkedIn logo is © LinkedIn Corporation 2026 and its use is subject to the LinkedIn Brand Guidelines and User Agreement. LinkedIn is a registered trademark of LinkedIn Corporation or its affiliates; its use here does not signify affiliation with or endorsement by LinkedIn Corporation or its affiliates.

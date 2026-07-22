@@ -4,7 +4,6 @@ export {
   CloseIcon,
   DownloadIcon,
   GitHubIcon,
-  LinkedInIcon,
   SearchIcon,
   SettingsIcon,
   UploadIcon,

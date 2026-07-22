@@ -1,7 +1,7 @@
 import { Box, Card, CardContent, Stack, TextStyle } from "strawn";
-import { CalendarIcon, CheckIcon, CloseIcon, DownloadIcon, GitHubIcon, LinkedInIcon, SearchIcon, SettingsIcon, UploadIcon, UserIcon, WarningIcon } from "./iconImports";
+import { CalendarIcon, CheckIcon, CloseIcon, DownloadIcon, GitHubIcon, SearchIcon, SettingsIcon, UploadIcon, UserIcon, WarningIcon } from "./iconImports";
 
-const icons = { CalendarIcon, CheckIcon, CloseIcon, DownloadIcon, GitHubIcon, LinkedInIcon, SearchIcon, SettingsIcon, UploadIcon, UserIcon, WarningIcon };
+const icons = { CalendarIcon, CheckIcon, CloseIcon, DownloadIcon, GitHubIcon, SearchIcon, SettingsIcon, UploadIcon, UserIcon, WarningIcon };
 
 export function IconsPage() {
   return (

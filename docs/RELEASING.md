@@ -39,5 +39,5 @@ have no npm publishing secret to maintain.
 4. Approve the protected `npm-release` environment deployment.
 5. Confirm the npm provenance attestations and Git tags for both packages.
 
-The release-readiness check intentionally blocks publication while the LinkedIn
-redistribution review remains pending.
+The release-readiness check prevents restricted third-party brand assets from
+shipping in the public icon package.

@@ -119,7 +119,6 @@ import { PaletteIcon } from "./components/PaletteIcon.js";
 import { ZapIcon } from "./components/ZapIcon.js";
 import { GitHubIcon } from "./components/GitHubIcon.js";
 import { DevpostIcon } from "./components/DevpostIcon.js";
-import { LinkedInIcon } from "./components/LinkedInIcon.js";
 
 export type IconCatalogItem = {
   name: string;
@@ -248,7 +247,6 @@ export const iconCatalog = [
   { name: "ZapIcon", category: "System and media", keywords: ["lightning","energy","fast"], icon: ZapIcon },
   { name: "GitHubIcon", category: "Brands", keywords: ["brand","code","repository"], icon: GitHubIcon },
   { name: "DevpostIcon", category: "Brands", keywords: ["brand","hackathon"], icon: DevpostIcon },
-  { name: "LinkedInIcon", category: "Brands", keywords: ["brand","professional","network"], icon: LinkedInIcon },
 ] as const satisfies readonly IconCatalogItem[];
 
 export const iconCategories = ["All", "Actions", "Navigation", "Status", "Files and content", "People and communication", "Commerce and data", "System and media", "Brands"] as const;
