@@ -1,6 +1,6 @@
 {
   "name": "strawn",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Strawn — Moriatz’s official React design system.",
   "license": "MIT",
   "type": "module",
@@ -38,7 +38,7 @@
     "@radix-ui/react-toast": "^1.2.18",
     "@radix-ui/react-tooltip": "^1.2.11",
     "@stitches/react": "^1.2.8",
-    "strawn-icons": "0.0.0"
+    "strawn-icons": "0.1.0"
   },
   "peerDependencies": {
     "react": ">=18.2 <20",
