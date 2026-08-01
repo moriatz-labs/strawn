@@ -5,6 +5,7 @@ import { ComponentsPage } from "../../features/components/ComponentsPage";
 import { CsvImportDialogPage } from "../../features/csv/CsvImportDialogPage";
 import { HomePage } from "../../features/home/HomePage";
 import { IconsPage } from "../../features/icons/IconsPage";
+import { NavbarLabPage } from "../../features/navigation/NavbarLabPage";
 import { ThemingPage } from "../../features/theming/ThemingPage";
 
 export function DocsLayout() {
@@ -22,12 +23,13 @@ export function DocsLayout() {
           { label: "Components", to: "/components" },
           { label: "Icons", to: "/icons" },
           { label: "Theming", to: "/theming" },
+          { label: "Nav lab", to: "/navbar-lab" },
         ]}
         action={{
           label: "GitHub",
           href: "https://github.com/moriatz-labs/strawn",
           external: true,
-          icon: <GitHubIcon aria-hidden="true" size={16} />,
+          icon: <GitHubIcon aria-hidden="true" size={13} />,
         }}
       />
       <main id="main" className="page-shell">
@@ -36,6 +38,7 @@ export function DocsLayout() {
           <Route path="/components" element={<ComponentsPage />} />
           <Route path="/components/csv-import-dialog" element={<CsvImportDialogPage />} />
           <Route path="/icons" element={<IconsPage />} />
+          <Route path="/navbar-lab" element={<NavbarLabPage />} />
           <Route path="/theming" element={<ThemingPage />} />
         </Routes>
       </main>
