@@ -15,6 +15,7 @@ export function DocsLayout() {
         brand={(
           <NavLink className="brand" to="/" aria-label="Strawn home">
             <span className="brand-mark" aria-hidden="true" />
+            <span aria-hidden="true">Strawn</span>
           </NavLink>
         )}
         items={[

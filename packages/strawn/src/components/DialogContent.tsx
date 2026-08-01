@@ -18,7 +18,7 @@ export const DialogContent = styled(DialogPrimitive.Content, {
     transform: "translate(-50%, -50%) scale(1)",
     transition: "opacity var(--motion-duration-base) var(--motion-ease-enter), transform var(--motion-duration-base) var(--motion-ease-enter)",
     width: "100%",
-    zIndex: 90,
+    zIndex: "$modal",
     '&[data-state="closed"]': {
         opacity: 0,
         transform: "translate(-50%, -50%) scale(0.98)",

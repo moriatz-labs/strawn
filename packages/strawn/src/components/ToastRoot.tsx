@@ -4,7 +4,7 @@ import { styled } from "../stitches";
 export const ToastRoot = styled(ToastPrimitive.Root, {
     backgroundColor: "$card",
     border: "1px solid $border",
-    borderRadius: "$lg",
+    borderRadius: "$md",
     boxShadow: "$elevated",
     color: "$foreground",
     display: "grid",

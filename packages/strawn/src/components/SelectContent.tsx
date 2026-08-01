@@ -4,8 +4,8 @@ import { styled } from "../stitches";
 export const SelectContent = styled(SelectPrimitive.Content, {
     backgroundColor: "$card",
     border: "1px solid color-mix(in srgb, var(--border) 82%, var(--foreground))",
-    borderRadius: "$lg",
-    boxShadow: "0 18px 42px color-mix(in srgb, var(--foreground) 16%, transparent), 0 6px 16px color-mix(in srgb, var(--foreground) 10%, transparent)",
+    borderRadius: "$md",
+    boxShadow: "$elevated",
     color: "$foreground",
     height: "auto",
     maxHeight: "min(var(--radix-select-content-available-height), 16rem)",
@@ -13,7 +13,7 @@ export const SelectContent = styled(SelectPrimitive.Content, {
     overflow: "hidden",
     paddingBlock: "$2",
     transformOrigin: "var(--radix-select-content-transform-origin)",
-    zIndex: 80,
+    zIndex: "$dropdown",
     '&[data-state="open"]': {
         animation: "selectMenuIn $enter cubic-bezier(0.2, 0, 0, 1)",
     },

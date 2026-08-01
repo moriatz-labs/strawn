@@ -3,7 +3,7 @@ import { styled } from "../stitches";
 import { StyledButton } from "./StyledButton";
 
 export const StyledIconButton = styled(StyledButton, {
-    borderRadius: "$pill",
+    borderRadius: "$sm",
     padding: 0,
     position: "relative",
     boxShadow: "none",
@@ -20,23 +20,22 @@ export const StyledIconButton = styled(StyledButton, {
     variants: {
         variant: {
             solid: {
-                backgroundColor: "var(--button-tone-surface, var(--accent))",
+                backgroundColor: "var(--button-tone-surface, var(--primary))",
                 backgroundImage: "none",
                 borderColor: "transparent",
-                color: "var(--button-tone-text, var(--accent-foreground))",
+                color: "var(--button-tone-text, var(--primary-foreground))",
                 "&:hover:not(:disabled)": {
-                    backgroundColor: "var(--button-tone-hover, var(--accent))",
+                    backgroundColor: "var(--button-tone-hover, color-mix(in srgb, var(--primary) 88%, black))",
                     backgroundImage: "none",
                     borderColor: "transparent",
                     boxShadow: "none",
                 },
             },
             outline: {
-                borderColor: "color-mix(in srgb, var(--foreground) 28%, var(--border))",
-                boxShadow: "inset 0 1px 0 color-mix(in srgb, var(--foreground) 3%, transparent)",
+                borderColor: "$borderStrong",
+                boxShadow: "none",
                 "&:hover:not(:disabled)": {
-                    borderColor: "color-mix(in srgb, var(--foreground) 40%, var(--border))",
-                    boxShadow: "$soft",
+                    borderColor: "$foreground",
                 },
             },
         },

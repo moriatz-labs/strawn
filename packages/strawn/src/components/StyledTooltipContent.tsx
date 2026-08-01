@@ -2,10 +2,10 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { styled } from "../stitches";
 
 export const StyledTooltipContent = styled(TooltipPrimitive.Content, {
-    zIndex: 50,
+    zIndex: "$tooltip",
     width: "fit-content",
     maxWidth: "20rem",
-    borderRadius: "$md",
+    borderRadius: "$sm",
     border: "1px solid $border",
     backgroundColor: "$foreground",
     color: "$background",

@@ -1,9 +1,9 @@
-import type { ReactNode } from "react";
+import type { FormEvent, ReactNode } from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import axe from "axe-core";
 import { describe, expect, it, vi } from "vitest";
-import { Box, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Flex, Heading, IconButton, Progress, SegmentedControl, Separator, Text, ThemeProvider } from "strawn";
+import { Avatar, Badge, Box, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Flex, Heading, IconButton, Progress, SearchField, SegmentedControl, Separator, Surface, Text, ThemeProvider } from "strawn";
 
 function renderSystem(children: ReactNode) {
   return render(<ThemeProvider>{children}</ThemeProvider>);
@@ -54,7 +54,7 @@ describe("design-system quality contract", () => {
     expect(button.getAttribute("aria-busy")).toBe("true");
   });
 
-  it("keeps button sizes visually distinct while preserving the medium size", () => {
+  it("keeps every button size on the shared 44px control chassis", () => {
     renderSystem(
       <>
         <Button size="sm">Small</Button>
@@ -63,9 +63,61 @@ describe("design-system quality contract", () => {
       </>,
     );
 
-    expect(getComputedStyle(screen.getByRole("button", { name: "Small" })).minHeight).toBe("2rem");
-    expect(getComputedStyle(screen.getByRole("button", { name: "Medium" })).minHeight).toBe("2.5rem");
-    expect(getComputedStyle(screen.getByRole("button", { name: "Large" })).minHeight).toBe("3.5rem");
+    expect(getComputedStyle(screen.getByRole("button", { name: "Small" })).minHeight).toBe("var(--sizes-controlDefault)");
+    expect(getComputedStyle(screen.getByRole("button", { name: "Medium" })).minHeight).toBe("var(--sizes-controlDefault)");
+    expect(getComputedStyle(screen.getByRole("button", { name: "Large" })).minHeight).toBe("var(--sizes-controlDefault)");
+  });
+
+  it("gives removable badges a 44px action without inflating static badges", async () => {
+    const onRemove = vi.fn();
+    renderSystem(
+      <>
+        <Badge>Static badge</Badge>
+        <Badge onRemove={onRemove} removeLabel="Remove filter">Removable badge</Badge>
+      </>,
+    );
+
+    expect(getComputedStyle(screen.getByText("Static badge")).minHeight).toBe("1.5rem");
+    const removeButton = screen.getByRole("button", { name: "Remove filter" });
+    expect(getComputedStyle(removeButton).minHeight).toBe("var(--sizes-hitTarget)");
+    expect(getComputedStyle(removeButton).minWidth).toBe("var(--sizes-hitTarget)");
+    await userEvent.click(removeButton);
+    expect(onRemove).toHaveBeenCalledOnce();
+  });
+
+  it("exposes labeled avatars as images while keeping decorative avatars hidden", () => {
+    const { container } = renderSystem(
+      <>
+        <Avatar name="Paul Irish" initials="PI" />
+        <Avatar name="Decorative teammate" initials="DT" decorative />
+      </>,
+    );
+
+    const labeledAvatar = screen.getByRole("img", { name: "Paul Irish" });
+    expect(labeledAvatar.tagName).toBe("SPAN");
+    const decorativeAvatar = container.querySelector('[aria-hidden="true"]');
+    expect(decorativeAvatar?.getAttribute("role")).toBeNull();
+    expect(decorativeAvatar?.getAttribute("aria-label")).toBeNull();
+  });
+
+  it("keeps passive Surface out of the keyboard sequence while semantic polymorphic surfaces activate", async () => {
+    const user = userEvent.setup();
+    const onActivate = vi.fn();
+    renderSystem(
+      <>
+        <Surface interactive data-testid="passive-surface">Passive surface</Surface>
+        <Surface as="button" type="button" interactive onClick={onActivate}>Semantic surface</Surface>
+      </>,
+    );
+
+    const surface = screen.getByTestId("passive-surface");
+    expect(surface.getAttribute("role")).toBeNull();
+    expect(surface.tabIndex).toBe(-1);
+    expect(getComputedStyle(surface).cursor).not.toBe("pointer");
+    await user.tab();
+    expect(document.activeElement).toBe(screen.getByRole("button", { name: "Semantic surface" }));
+    await user.keyboard("{Enter}");
+    expect(onActivate).toHaveBeenCalledOnce();
   });
 
   it("supports roving arrow-key selection in segmented controls", async () => {
@@ -98,6 +150,29 @@ describe("design-system quality contract", () => {
     button.focus();
     await userEvent.keyboard("{Enter}");
     expect(onClick).toHaveBeenCalledOnce();
+  });
+
+  it("keeps SearchField clear actions from submitting their form while preserving explicit button types", async () => {
+    const user = userEvent.setup();
+    const onClear = vi.fn();
+    const onSubmit = vi.fn((event: FormEvent<HTMLFormElement>) => event.preventDefault());
+    renderSystem(
+      <form onSubmit={onSubmit}>
+        <SearchField label="Find repositories" onClear={onClear} />
+        <Button>Secondary action</Button>
+        <Button type="submit">Run search</Button>
+        <IconButton type="reset" label="Reset filters" icon={<span aria-hidden="true">R</span>} />
+      </form>,
+    );
+
+    const clearButton = screen.getByRole("button", { name: "Clear search" }) as HTMLButtonElement;
+    expect(clearButton.type).toBe("button");
+    expect((screen.getByRole("button", { name: "Secondary action" }) as HTMLButtonElement).type).toBe("button");
+    expect((screen.getByRole("button", { name: "Run search" }) as HTMLButtonElement).type).toBe("submit");
+    expect((screen.getByRole("button", { name: "Reset filters" }) as HTMLButtonElement).type).toBe("reset");
+    await user.click(clearButton);
+    expect(onClear).toHaveBeenCalledOnce();
+    expect(onSubmit).not.toHaveBeenCalled();
   });
 
   it("lets Box switch semantics and pass through native button behavior", async () => {

@@ -1,7 +1,7 @@
 {
   "name": "strawn-icons",
   "version": "0.1.0",
-  "description": "The icon library for Strawn — Moriatz’s official design system.",
+  "description": "The icon library for Strawn - Moriatz's official design system.",
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
@@ -46,6 +46,6 @@
     "url": "git+https://github.com/moriatz-labs/strawn.git",
     "directory": "packages/strawn-icons"
   },
-  "homepage": "https://design.moriatz.com/icons",
+  "homepage": "https://strawn.vercel.app/icons",
   "bugs": "https://github.com/moriatz-labs/strawn/issues"
 }

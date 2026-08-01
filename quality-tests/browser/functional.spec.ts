@@ -7,9 +7,49 @@ test("@functional renders the documentation shell without console errors", async
     if (message.type() === "error") errors.push(message.text());
   });
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("focused design system");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("clear thread");
+  const headingSize = await page.getByRole("heading", { level: 1 }).evaluate((heading) => Number.parseFloat(getComputedStyle(heading).fontSize));
+  expect(headingSize).toBeGreaterThanOrEqual(40);
   await expect(page.getByRole("navigation", { name: "Documentation" })).toBeVisible();
   expect(errors).toEqual([]);
+});
+
+test("@functional thread signature updates its live readout", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: /Language/ }).click();
+  await expect(page.getByTestId("thread-readout")).toContainText("3 faces");
+  await expect(page.getByTestId("thread-readout")).toContainText("Bricolage");
+});
+
+test("@functional documentation stays light when stored and system preferences are dark", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem("strawn-color-mode", "dark");
+    window.localStorage.setItem("strawn-docs-color-mode-v2", "dark");
+    window.localStorage.setItem("strawn-docs-color-mode-v3", "dark");
+  });
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.goto("/");
+  await expect(page.locator("html")).toHaveAttribute("data-color-mode", "light");
+  await expect(page.locator("html")).toHaveAttribute("data-color-mode-preference", "light");
+  const palette = await page.locator("html").evaluate((element) => ({
+    background: getComputedStyle(element).getPropertyValue("--background").trim(),
+    primary: getComputedStyle(element).getPropertyValue("--primary").trim(),
+  }));
+  expect(palette).toEqual({ background: "#ffffff", primary: "#5b3cc4" });
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations.filter(({ impact }) => impact === "serious" || impact === "critical")).toEqual([]);
+});
+
+test("@functional removable badge keeps a 44px keyboard-operable target", async ({ page }) => {
+  await page.goto("/components");
+  const removeButton = page.getByRole("button", { name: "Remove Generic tag" });
+  const box = await removeButton.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.width).toBeGreaterThanOrEqual(44);
+  expect(box!.height).toBeGreaterThanOrEqual(44);
+  await removeButton.focus();
+  await page.keyboard.press("Enter");
+  await expect(removeButton).toHaveCount(0);
 });
 
 test("@functional CSV dialog opens only from its trigger and accepts a file", async ({ page }) => {

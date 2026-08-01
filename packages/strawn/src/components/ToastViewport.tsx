@@ -10,5 +10,5 @@ export const ToastViewport = styled(ToastPrimitive.Viewport, {
     padding: 0,
     position: "fixed",
     right: "$5",
-    zIndex: 100,
+    zIndex: "$toast",
 });
