@@ -1,8 +1,8 @@
 export const cardStyles = {
   backgroundColor: "$card",
   border: "1px solid $border",
-  borderRadius: "$lg",
-  boxShadow: "$card",
+  borderRadius: "$md",
+  boxShadow: "none",
   color: "$cardForeground",
   display: "flex",
   flexDirection: "column",
@@ -10,26 +10,24 @@ export const cardStyles = {
   overflow: "hidden",
   position: "relative",
   textDecoration: "none",
-  transition: "border-color $base, box-shadow $base, transform $fast",
+  transition: "background-color $fast, border-color $fast",
   variants: {
     interactive: {
       true: {
         cursor: "pointer",
         "&:focus-visible": { outline: "2px solid $ring", outlineOffset: 2 },
-        "&:active:not(:disabled):not([aria-disabled='true'])": { boxShadow: "$soft", transform: "translateY(1px)" },
+        "&:active:not(:disabled):not([aria-disabled='true'])": { backgroundColor: "$surfaceInset" },
         "&:disabled, &[aria-disabled='true']": { cursor: "not-allowed", opacity: 0.55 },
         "@media (hover: hover) and (pointer: fine)": {
           "&:hover:not(:disabled):not([aria-disabled='true'])": {
             borderColor: "$foreground",
-            boxShadow: "$elevated",
-            transform: "translateY(-2px)",
+            backgroundColor: "$surfaceRaised",
           },
         },
       },
     },
   },
   "@media (prefers-reduced-motion: reduce)": {
-    transition: "border-color $base, box-shadow $base",
-    transform: "none !important",
+    transitionDuration: "var(--motion-duration-immediate)",
   },
 } as const;

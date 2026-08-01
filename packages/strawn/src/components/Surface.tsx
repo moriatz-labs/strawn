@@ -1,15 +1,16 @@
 import { styled } from "../stitches";
 
 export const Surface = styled("div", {
+  border: "1px solid transparent",
   color: "$foreground",
   minWidth: 0,
   variants: {
     tone: {
-      default: { backgroundColor: "$surface", boxShadow: "$hairline" },
-      raised: { backgroundColor: "$surfaceRaised", boxShadow: "$card" },
-      inset: { backgroundColor: "$surfaceInset", boxShadow: "inset 0 0 0 1px var(--border)" },
-      inverse: { backgroundColor: "$inverse", color: "$inverseForeground" },
-      transparent: { backgroundColor: "transparent" },
+      default: { backgroundColor: "$surface", borderColor: "$border" },
+      raised: { backgroundColor: "$surfaceRaised", borderColor: "$borderStrong" },
+      inset: { backgroundColor: "$surfaceInset", borderColor: "$border" },
+      inverse: { backgroundColor: "$inverse", borderColor: "transparent", color: "$inverseForeground" },
+      transparent: { backgroundColor: "transparent", borderColor: "transparent" },
     },
     radius: {
       none: { borderRadius: 0 },
@@ -27,14 +28,16 @@ export const Surface = styled("div", {
     },
     interactive: {
       true: {
-        transition: "box-shadow $fast, transform $fast",
-        "@media (hover: hover) and (pointer: fine)": {
-          "&:hover": { boxShadow: "$elevated", transform: "translateY(-2px)" },
+        "&:is(button, a[href])": {
+          cursor: "pointer",
+          transition: "background-color $fast, border-color $fast",
+          "&:focus-visible": { outline: "2px solid $ring", outlineOffset: 2 },
         },
-        "&:active": { transform: "scale(var(--motion-scale-press))" },
-        "@media (prefers-reduced-motion: reduce)": { transform: "none !important" },
+        "@media (hover: hover) and (pointer: fine)": {
+          "&:is(button, a[href]):hover": { backgroundColor: "$muted", borderColor: "$borderStrong" },
+        },
       },
     },
   },
-  defaultVariants: { tone: "default", radius: "lg", padding: "md" },
+  defaultVariants: { tone: "default", radius: "md", padding: "md" },
 });

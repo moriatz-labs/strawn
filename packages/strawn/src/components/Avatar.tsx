@@ -4,7 +4,7 @@ import { AvatarRoot } from "./AvatarRoot";
 import { getInitials } from "../helpers/getInitials";
 
 export function Avatar({ src, name, initials, size = "md", decorative = false, css }: AvatarProps) {
-    return (<AvatarRoot size={size} css={css} aria-hidden={decorative || undefined} aria-label={decorative ? undefined : name}>
+    return (<AvatarRoot size={size} css={css} role={decorative ? undefined : "img"} aria-hidden={decorative || undefined} aria-label={decorative ? undefined : name}>
       {src ? <AvatarImage src={src} alt=""/> : initials ?? getInitials(name)}
     </AvatarRoot>);
 }

@@ -24,19 +24,19 @@ export const spaceScale = {
 
 export const buttonSizeStyles = {
   sm: {
-    minHeight: "2rem",
+    minHeight: "$controlDefault",
     paddingInline: "$3",
     fontSize: "$xs",
   },
   md: {
-    minHeight: "2.5rem",
-    paddingInline: "$6",
-    fontSize: "$md",
+    minHeight: "$controlDefault",
+    paddingInline: "$4",
+    fontSize: "$sm",
   },
   lg: {
-    minHeight: "3.5rem",
-    paddingInline: "$9",
-    fontSize: "$lg",
+    minHeight: "$controlDefault",
+    paddingInline: "$5",
+    fontSize: "$md",
   },
 } as const;
 
@@ -54,16 +54,16 @@ export const buttonToneStyles = {
     "--button-tone-muted": "color-mix(in srgb, #000000 6%, var(--background))",
   },
   blue: {
-    "--button-tone-surface": "#315fbd",
+    "--button-tone-surface": "#245d7a",
     "--button-tone-text": "#ffffff",
-    "--button-tone-hover": "#244c99",
-    "--button-tone-muted": "color-mix(in srgb, #315fbd 10%, var(--background))",
+    "--button-tone-hover": "#194a64",
+    "--button-tone-muted": "color-mix(in srgb, #245d7a 10%, var(--background))",
   },
   teal: {
-    "--button-tone-surface": "#28766a",
+    "--button-tone-surface": "#0b514b",
     "--button-tone-text": "#ffffff",
-    "--button-tone-hover": "#1f5f55",
-    "--button-tone-muted": "color-mix(in srgb, #28766a 10%, var(--background))",
+    "--button-tone-hover": "#083f3a",
+    "--button-tone-muted": "color-mix(in srgb, #0b514b 10%, var(--background))",
   },
   amber: {
     "--button-tone-surface": "#9a6815",
@@ -78,28 +78,28 @@ export const buttonToneStyles = {
     "--button-tone-muted": "color-mix(in srgb, #87384c 10%, var(--background))",
   },
   plum: {
-    "--button-tone-surface": "#765092",
+    "--button-tone-surface": "#62506f",
     "--button-tone-text": "#ffffff",
-    "--button-tone-hover": "#5f4076",
-    "--button-tone-muted": "color-mix(in srgb, #765092 12%, var(--background))",
+    "--button-tone-hover": "#4d3d58",
+    "--button-tone-muted": "color-mix(in srgb, #62506f 12%, var(--background))",
   },
 } as const;
 
 export const iconButtonSizeStyles = {
   xs: {
-    width: "1.875rem",
-    height: "1.875rem",
+    width: "$controlDefault",
+    height: "$controlDefault",
   },
   sm: {
-    width: "2.5rem",
-    height: "2.5rem",
+    width: "$controlDefault",
+    height: "$controlDefault",
   },
   md: {
     width: "2.75rem",
     height: "2.75rem",
   },
   lg: {
-    width: "3.25rem",
-    height: "3.25rem",
+    width: "$controlDefault",
+    height: "$controlDefault",
   },
 } as const;

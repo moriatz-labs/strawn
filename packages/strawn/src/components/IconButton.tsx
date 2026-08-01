@@ -3,9 +3,9 @@ import type { IconButtonProps } from "../types/primitives";
 import { Box } from "./Box";
 import { StyledIconButton } from "./StyledIconButton";
 
-export function IconButton({ icon, label, ...props }: IconButtonProps) {
+export function IconButton({ icon, label, type = "button", ...props }: IconButtonProps) {
     const IconButtonComponent = StyledIconButton as unknown as ElementType;
-    return (<IconButtonComponent aria-label={label} {...props}>
+    return (<IconButtonComponent type={type} aria-label={label} {...props}>
       {icon}
       <Box as="span" css={{
             position: "absolute",
