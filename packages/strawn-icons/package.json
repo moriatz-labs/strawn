@@ -1,6 +1,6 @@
 {
   "name": "strawn-icons",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The icon library for Strawn - Moriatz's official design system.",
   "license": "MIT",
   "type": "module",
