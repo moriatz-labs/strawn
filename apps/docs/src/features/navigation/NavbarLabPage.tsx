@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Stack, TextStyle } from "strawn";
+import { Navbar, NavbarAction, NavbarActions, NavbarBrand, NavbarLink, NavbarLinks, Stack, TextStyle } from "strawn";
 import { GitHubIcon } from "strawn-icons";
 
 const navbarVariants = [
@@ -52,20 +52,20 @@ function GlassNavSpecimen({ variant }: { variant: NavbarVariant }) {
       </header>
 
       <div className={`navbar-specimen-stage navbar-specimen-stage--${variant.slug}`}>
-        <nav className={`glass-nav glass-nav--${variant.slug}`} aria-label={`${variant.title} preview`}>
-          <div className="glass-nav-brand">
-            <Link className="glass-nav-brand-link" to="/" aria-label={`Strawn home, ${variant.title} preview`}>
+        <Navbar className={`glass-nav glass-nav--${variant.slug}`} aria-label={`${variant.title} preview`}>
+          <NavbarBrand className="glass-nav-brand">
+            <NavbarLink as={Link} className="glass-nav-brand-link" to="/" aria-label={`Strawn home, ${variant.title} preview`}>
               <span className="glass-nav-mark" aria-hidden="true" />
               <span aria-hidden="true">Strawn</span>
-            </Link>
-          </div>
-          <div className="glass-nav-links">
-            <Link to="/components">Components</Link>
-            <Link to="/icons">Icons</Link>
-            <Link to="/theming">Theming</Link>
-          </div>
-          <div className="glass-nav-actions">
-            <a
+            </NavbarLink>
+          </NavbarBrand>
+          <NavbarLinks className="glass-nav-links">
+            <NavbarLink as={Link} to="/components">Components</NavbarLink>
+            <NavbarLink as={Link} to="/icons">Icons</NavbarLink>
+            <NavbarLink as={Link} to="/theming">Theming</NavbarLink>
+          </NavbarLinks>
+          <NavbarActions className="glass-nav-actions">
+            <NavbarAction
               className="glass-nav-action"
               href="https://github.com/moriatz-labs/strawn"
               target="_blank"
@@ -74,9 +74,9 @@ function GlassNavSpecimen({ variant }: { variant: NavbarVariant }) {
             >
               <GitHubIcon aria-hidden="true" size={13} />
               <span className="glass-nav-action-label">GitHub</span>
-            </a>
-          </div>
-        </nav>
+            </NavbarAction>
+          </NavbarActions>
+        </Navbar>
       </div>
     </article>
   );

@@ -5,6 +5,7 @@ export { Surface } from "./Surface";
 export { ScrollArea } from "./ScrollArea";
 export { Separator } from "./Separator";
 export { Toolbar } from "./Toolbar";
+export { Navbar, NavbarAction, NavbarActions, NavbarBrand, NavbarLink, NavbarLinks } from "./Navbar";
 export { VisuallyHidden } from "./VisuallyHidden";
 export { Kbd } from "./Kbd";
 export { StatusDot } from "./StatusDot";

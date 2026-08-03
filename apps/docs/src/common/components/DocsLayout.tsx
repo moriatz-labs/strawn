@@ -1,5 +1,6 @@
 import { NavLink, Route, Routes } from "react-router-dom";
 import { GitHubIcon } from "strawn-icons";
+import { NavbarLink, TextStyle } from "strawn";
 import { MarketingNav } from "./MarketingNav";
 import { ComponentsPage } from "../../features/components/ComponentsPage";
 import { CsvImportDialogPage } from "../../features/csv/CsvImportDialogPage";
@@ -14,10 +15,9 @@ export function DocsLayout() {
       <a className="skip-link" href="#main">Skip to content</a>
       <MarketingNav
         brand={(
-          <NavLink className="brand" to="/" aria-label="Strawn home">
-            <span className="brand-mark" aria-hidden="true" />
-            <span aria-hidden="true">Strawn</span>
-          </NavLink>
+          <NavbarLink as={NavLink} to="/" aria-label="Strawn home" css={{ fontSize: "$lg", paddingInline: "$2" }}>
+            <TextStyle as="span" textStyle="headingSm">Strawn</TextStyle>
+          </NavbarLink>
         )}
         items={[
           { label: "Components", to: "/components" },
