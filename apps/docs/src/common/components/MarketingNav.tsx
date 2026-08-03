@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
+import { Navbar, NavbarAction, NavbarActions, NavbarBrand, NavbarLink, NavbarLinks } from "strawn";
 
 type MarketingNavItem = {
   label: string;
@@ -21,30 +22,23 @@ type MarketingNavProps = {
 
 export function MarketingNav({ brand, items, action }: MarketingNavProps) {
   return (
-    <header className="marketing-nav-shell">
-      <div className="marketing-nav-container">
-        <div className="marketing-nav-surface">
-          <div className="marketing-nav-brand">{brand}</div>
-          <nav className="marketing-nav-links" aria-label="Documentation">
-            {items.map((item) => (
-              <NavLink key={item.to} to={item.to}>{item.label}</NavLink>
-            ))}
-          </nav>
-          <div className="marketing-nav-actions">
-            {action ? (
-              <a
-                className="marketing-nav-action"
-                href={action.href}
-                target={action.external ? "_blank" : undefined}
-                rel={action.external ? "noreferrer" : undefined}
-              >
-                {action.icon}
-                {action.label}
-              </a>
-            ) : null}
-          </div>
-        </div>
-      </div>
+    <header>
+      <Navbar aria-label="Documentation" css={{ margin: "$3 auto", maxWidth: "$container", width: "calc(100% - $space$8)", position: "sticky", top: "$3", zIndex: "$header" }}>
+        <NavbarBrand>{brand}</NavbarBrand>
+        <NavbarLinks>
+          {items.map((item) => (
+            <NavbarLink key={item.to} as={NavLink} to={item.to}>{item.label}</NavbarLink>
+          ))}
+        </NavbarLinks>
+        <NavbarActions>
+          {action ? (
+            <NavbarAction href={action.href} target={action.external ? "_blank" : undefined} rel={action.external ? "noreferrer" : undefined}>
+              {action.icon}
+              {action.label}
+            </NavbarAction>
+          ) : null}
+        </NavbarActions>
+      </Navbar>
     </header>
   );
 }
