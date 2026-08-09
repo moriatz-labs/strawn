@@ -169,7 +169,7 @@ body {
 .navbar-lab-page {
   --navbar-glass: color-mix(in srgb, var(--surface-raised) 78%, transparent);
   --navbar-glass-strong: color-mix(in srgb, var(--surface-raised) 90%, transparent);
-  --navbar-violet-edge: color-mix(in srgb, var(--primary) 24%, var(--border));
+  --navbar-contrast-edge: color-mix(in srgb, var(--primary) 24%, var(--border));
 }
 
 .navbar-lab-heading {
@@ -271,7 +271,7 @@ body {
   align-items: center;
   gap: 0.625rem;
   padding: 0.375rem 1rem;
-  border: 1px solid var(--navbar-violet-edge);
+  border: 1px solid var(--navbar-contrast-edge);
   background: var(--navbar-glass);
   backdrop-filter: blur(24px) saturate(1.2);
   -webkit-backdrop-filter: blur(24px) saturate(1.2);
@@ -474,7 +474,7 @@ body {
 .glass-nav--orbital .glass-nav-links,
 .glass-nav--orbital .glass-nav-actions {
   min-height: 3.5rem;
-  border: 1px solid var(--navbar-violet-edge);
+  border: 1px solid var(--navbar-contrast-edge);
   background: var(--navbar-glass);
   box-shadow:
     0 0.875rem 2rem color-mix(in srgb, var(--foreground) 10%, transparent),

@@ -35,7 +35,7 @@ test("@functional documentation stays light when stored and system preferences a
     background: getComputedStyle(element).getPropertyValue("--background").trim(),
     primary: getComputedStyle(element).getPropertyValue("--primary").trim(),
   }));
-  expect(palette).toEqual({ background: "#ffffff", primary: "#5b3cc4" });
+  expect(palette).toEqual({ background: "#ffffff", primary: "#0a0a0a" });
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations.filter(({ impact }) => impact === "serious" || impact === "critical")).toEqual([]);
 });

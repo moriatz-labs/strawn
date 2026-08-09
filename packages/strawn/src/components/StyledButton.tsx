@@ -63,7 +63,7 @@ export const StyledButton = styled("button", {
                 color: "var(--button-tone-text, var(--primary-foreground))",
                 boxShadow: "none",
                 "&:hover:not(:disabled)": {
-                    backgroundColor: "var(--button-tone-hover, color-mix(in srgb, var(--primary) 88%, black))",
+                    backgroundColor: "var(--button-tone-hover, color-mix(in srgb, var(--primary) 88%, var(--background)))",
                     borderColor: "transparent",
                     boxShadow: "none",
                 },
