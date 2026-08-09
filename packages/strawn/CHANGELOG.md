@@ -1,5 +1,11 @@
 # strawn
 
+## 0.3.0
+
+### Minor Changes
+
+- 41f3586: Replace Strawn's violet-led foundation with a high-contrast black-and-white theme while preserving semantic status colors, accessible focus and control contrast, and light/dark mode support.
+
 ## 0.2.0
 
 ### Minor Changes
