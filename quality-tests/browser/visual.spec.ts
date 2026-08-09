@@ -30,7 +30,7 @@ for (const width of widths) {
       surface: getComputedStyle(element).getPropertyValue("--surface").trim(),
       primary: getComputedStyle(element).getPropertyValue("--primary").trim(),
     }));
-    expect(palette).toEqual({ background: "#ffffff", surface: "#ffffff", primary: "#5b3cc4" });
+    expect(palette).toEqual({ background: "#ffffff", surface: "#ffffff", primary: "#0a0a0a" });
 
     await page.goto("/components");
     await expect(page.getByRole("heading", { level: 1, name: "A precise kit for product work." })).toBeVisible();

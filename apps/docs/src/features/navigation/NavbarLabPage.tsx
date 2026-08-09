@@ -7,13 +7,13 @@ const navbarVariants = [
     slug: "capsule",
     title: "Original capsule",
     eyebrow: "Closest to the old Strawn nav",
-    description: "A single floating glass volume with a soft violet edge and quiet lift.",
+    description: "A single floating glass volume with a soft graphite edge and quiet lift.",
   },
   {
     slug: "prism",
     title: "Prismatic bevel",
     eyebrow: "Sharper refraction",
-    description: "A brighter top plane and violet lower edge make the bar feel precision-cut.",
+    description: "A brighter top plane and ink-dark lower edge make the bar feel precision-cut.",
   },
   {
     slug: "stacked",

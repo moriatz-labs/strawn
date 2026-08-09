@@ -23,14 +23,14 @@ function ColorModeProbe() {
 }
 
 describe("Strawn theming", () => {
-  it("ships the white-led violet woven-precision foundation", () => {
+  it("ships the white-and-black precision foundation", () => {
     expect(defaultTheme.colors.background).toBe("#ffffff");
     expect(defaultTheme.colors.surface).toBe("#ffffff");
-    expect(defaultTheme.colors.primary).toBe("#5b3cc4");
-    expect(defaultTheme.colors.secondary).toBe("#f1edf8");
-    expect(defaultTheme.colors.accent).toBe("#eee8ff");
-    expect(darkTheme.colors.background).toBe("#14101b");
-    expect(darkTheme.colors.primary).toBe("#c4b5fd");
+    expect(defaultTheme.colors.primary).toBe("#0a0a0a");
+    expect(defaultTheme.colors.secondary).toBe("#f2f2f2");
+    expect(defaultTheme.colors.accent).toBe("#ededed");
+    expect(darkTheme.colors.background).toBe("#000000");
+    expect(darkTheme.colors.primary).toBe("#ffffff");
     expect(defaultTheme.colors.primary).not.toBe(defaultTheme.colors.accent);
     expect(defaultTheme.controls.heightDefault).toBe("2.75rem");
     expect(defaultTheme.shadows.card).toBe("none");
