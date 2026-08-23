@@ -1,5 +1,11 @@
 # strawn
 
+## 0.5.1
+
+### Patch Changes
+
+- 92a92ff: Update the canonical Moriatz Sans pin to v0.3.0, whose glyph bounds and sidebearings are normalized to shared alignment metrics.
+
 ## 0.5.0
 
 ### Minor Changes
