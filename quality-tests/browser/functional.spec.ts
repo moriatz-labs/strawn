@@ -22,13 +22,26 @@ test("@functional thread signature updates its live readout", async ({ page }) =
 });
 
 test("@functional Moriatz Sans owns every typography role", async ({ page }) => {
-  await page.goto("/theming");
+  await page.goto("/font");
   await page.evaluate(() => document.fonts.ready);
-  const families = await page.locator("body, h1, button, code").evaluateAll((elements) => (
+  const families = await page.locator("body, h1, .font-live-sample, .font-glyphs, .font-details dd").evaluateAll((elements) => (
     elements.map((element) => getComputedStyle(element).fontFamily)
   ));
   expect(families.length).toBeGreaterThanOrEqual(4);
   for (const family of families) expect(family).toContain("Moriatz Sans Variable");
+});
+
+test("@functional font page exposes an editable variable-weight specimen", async ({ page }) => {
+  await page.goto("/font");
+  await expect(page.getByRole("heading", { level: 1, name: "Moriatz Sans" })).toBeVisible();
+
+  const sampleInput = page.getByLabel("Sample text");
+  await sampleInput.fill("DARKER SYSTEMS");
+  await expect(page.getByTestId("font-live-sample")).toHaveText("DARKER SYSTEMS");
+
+  const weightInput = page.getByLabel("Weight");
+  await weightInput.fill("700");
+  await expect(page.getByTestId("font-live-sample")).toHaveCSS("font-weight", "700");
 });
 
 test("@functional documentation stays light when stored and system preferences are dark", async ({ page }) => {
@@ -96,7 +109,7 @@ test("@functional CSV dialog opens only from its trigger and accepts a file", as
 });
 
 test("@functional has no serious accessibility violations", async ({ page }) => {
-  for (const path of ["/", "/components", "/components/csv-import-dialog", "/icons", "/navbar-lab", "/theming"]) {
+  for (const path of ["/", "/components", "/components/csv-import-dialog", "/icons", "/font", "/navbar-lab", "/theming"]) {
     await page.goto(path);
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations.filter(({ impact }) => impact === "serious" || impact === "critical"), path).toEqual([]);

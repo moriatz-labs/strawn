@@ -41,6 +41,15 @@ for (const width of widths) {
     expect(workflowBox!.x).toBeGreaterThanOrEqual(0);
     expect(workflowBox!.x + workflowBox!.width).toBeLessThanOrEqual(componentMetrics.viewport + 1);
 
+    await page.goto("/font");
+    await expect(page.getByRole("heading", { level: 1, name: "Moriatz Sans" })).toBeVisible();
+    const fontMetrics = await horizontalLayout(page);
+    expect(fontMetrics.overflow, JSON.stringify(fontMetrics.offenders)).toBe(false);
+    const fontPageBox = await page.locator(".font-page").boundingBox();
+    expect(fontPageBox).not.toBeNull();
+    expect(fontPageBox!.x).toBeGreaterThanOrEqual(0);
+    expect(fontPageBox!.x + fontPageBox!.width).toBeLessThanOrEqual(fontMetrics.viewport + 1);
+
     await page.goto("/navbar-lab");
     await expect(page.getByRole("heading", { level: 1, name: "Glass, with structure." })).toBeVisible();
     await expect(page.locator("main nav[aria-label$='preview']")).toHaveCount(5);
