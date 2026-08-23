@@ -4,6 +4,7 @@ import { NavbarLink, TextStyle } from "strawn";
 import { MarketingNav } from "./MarketingNav";
 import { ComponentsPage } from "../../features/components/ComponentsPage";
 import { CsvImportDialogPage } from "../../features/csv/CsvImportDialogPage";
+import { FontPage } from "../../features/font/FontPage";
 import { HomePage } from "../../features/home/HomePage";
 import { IconsPage } from "../../features/icons/IconsPage";
 import { NavbarLabPage } from "../../features/navigation/NavbarLabPage";
@@ -22,6 +23,7 @@ export function DocsLayout() {
         items={[
           { label: "Components", to: "/components" },
           { label: "Icons", to: "/icons" },
+          { label: "Font", to: "/font" },
           { label: "Theming", to: "/theming" },
           { label: "Nav lab", to: "/navbar-lab" },
         ]}
@@ -38,6 +40,7 @@ export function DocsLayout() {
           <Route path="/components" element={<ComponentsPage />} />
           <Route path="/components/csv-import-dialog" element={<CsvImportDialogPage />} />
           <Route path="/icons" element={<IconsPage />} />
+          <Route path="/font" element={<FontPage />} />
           <Route path="/navbar-lab" element={<NavbarLabPage />} />
           <Route path="/theming" element={<ThemingPage />} />
         </Routes>
