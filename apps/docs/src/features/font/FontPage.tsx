@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 import { TextStyle } from "strawn";
 
 const weightSpecimens = [
@@ -28,13 +28,30 @@ export function FontPage() {
     fontWeight: weight,
   };
 
+  const moveInspectorFocus = (event: KeyboardEvent<HTMLButtonElement>, glyph: string) => {
+    const glyphList = [...inspectorGlyphs];
+    const currentIndex = glyphList.indexOf(glyph);
+    let nextIndex: number | undefined;
+
+    if (event.key === "ArrowRight") nextIndex = (currentIndex + 1) % glyphList.length;
+    if (event.key === "ArrowLeft") nextIndex = (currentIndex - 1 + glyphList.length) % glyphList.length;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = glyphList.length - 1;
+    if (nextIndex === undefined) return;
+
+    event.preventDefault();
+    setInspectedGlyph(glyphList[nextIndex]);
+    const buttons = event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>("button");
+    buttons?.[nextIndex]?.focus();
+  };
+
   return (
     <div className="font-page">
       <header className="font-page-hero">
         <div className="font-page-meta">
           <span>Moriatz Sans</span>
           <span>Variable 100—700</span>
-          <span>Version 0.4</span>
+          <span>Version 0.5</span>
         </div>
         <h1 aria-label="Moriatz Sans">
           <span>MORIATZ</span>
@@ -80,14 +97,16 @@ export function FontPage() {
             <span>Descender <b>−220</b></span>
           </div>
         </div>
-        <div className="font-inspector-grid" aria-label="Choose a glyph">
+        <div className="font-inspector-grid" role="toolbar" aria-label="Choose a glyph">
           {[...inspectorGlyphs].map((glyph) => (
             <button
               type="button"
               key={glyph}
               aria-label={`Inspect ${glyph}`}
               aria-pressed={inspectedGlyph === glyph}
+              tabIndex={inspectedGlyph === glyph ? 0 : -1}
               onClick={() => setInspectedGlyph(glyph)}
+              onKeyDown={(event) => moveInspectorFocus(event, glyph)}
             >
               {glyph}
             </button>
