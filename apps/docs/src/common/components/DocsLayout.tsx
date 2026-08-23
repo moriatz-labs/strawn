@@ -1,10 +1,8 @@
 import { useEffect } from "react";
-import { NavLink, Route, Routes } from "react-router-dom";
+import { Navigate, NavLink, Route, Routes } from "react-router-dom";
 import { GitHubIcon } from "strawn-icons";
 import { NavbarLink, TextStyle } from "strawn";
 import { MarketingNav } from "./MarketingNav";
-import { ComponentsPage } from "../../features/components/ComponentsPage";
-import { CsvImportDialogPage } from "../../features/csv/CsvImportDialogPage";
 import { FontPage } from "../../features/font/FontPage";
 import { HomePage } from "../../features/home/HomePage";
 import { IconsPage } from "../../features/icons/IconsPage";
@@ -49,9 +47,8 @@ export function DocsLayout() {
           </NavbarLink>
         )}
         items={[
-          { label: "Components", to: "/components" },
-          { label: "Icons", to: "/icons" },
           { label: "Font", to: "/font" },
+          { label: "Icons", to: "/icons" },
         ]}
         action={{
           label: "GitHub",
@@ -63,10 +60,9 @@ export function DocsLayout() {
       <main id="main" className="page-shell">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/components" element={<ComponentsPage />} />
-          <Route path="/components/csv-import-dialog" element={<CsvImportDialogPage />} />
           <Route path="/icons" element={<IconsPage />} />
           <Route path="/font" element={<FontPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
     </>

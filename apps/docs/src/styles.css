@@ -438,6 +438,173 @@ html[data-compact-visual-viewport="true"] .principles {
   background: color-mix(in srgb, var(--inverse-foreground) 10%, transparent);
 }
 
+.home-page {
+  display: grid;
+  gap: clamp(5rem, 10vw, 9rem);
+}
+
+.home-page .hero {
+  min-height: 0;
+  grid-template-columns: minmax(0, 0.9fr) minmax(28rem, 1.1fr);
+  align-items: start;
+  gap: clamp(3rem, 8vw, 7rem);
+}
+
+.home-page .hero-copy {
+  position: sticky;
+  top: 7rem;
+  max-width: 37rem;
+  gap: 1.5rem;
+}
+
+.home-page .hero-copy h1 {
+  max-width: 12ch;
+  font-size: clamp(3rem, 6vw, 5.75rem);
+  font-weight: var(--type-weight-semibold);
+  letter-spacing: var(--type-tracking-tight);
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.home-page .hero-copy > p,
+.integration-section > header > p {
+  color: var(--muted-foreground);
+  font-size: var(--type-size-lg);
+  line-height: var(--type-leading-body);
+  text-wrap: pretty;
+}
+
+.home-page code {
+  font-family: var(--font-mono);
+  font-weight: var(--type-weight-medium);
+}
+
+.home-eyebrow {
+  color: var(--muted-foreground);
+  font-size: var(--type-size-xs);
+  font-weight: var(--type-weight-medium);
+  letter-spacing: var(--type-tracking-caps);
+  text-transform: uppercase;
+}
+
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.home-definition {
+  border-top: 1px solid var(--border-strong);
+}
+
+.home-definition article {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  gap: 1.5rem;
+  padding-block: clamp(2rem, 5vw, 3.5rem);
+  border-bottom: 1px solid var(--border);
+}
+
+.home-asset-mark {
+  display: grid;
+  width: 3.25rem;
+  height: 3.25rem;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: var(--inverse);
+  color: var(--inverse-foreground);
+  font-size: var(--type-size-lg);
+  font-weight: var(--type-weight-bold);
+}
+
+.home-definition article > div {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.home-definition article > div > code,
+.integration-copy > div > code {
+  color: var(--muted-foreground);
+  font-size: var(--type-size-xs);
+}
+
+.home-definition h2,
+.integration-section h2,
+.integration-example h3 {
+  font-family: var(--font-heading);
+  font-weight: var(--type-weight-semibold);
+  line-height: var(--type-leading-heading);
+  text-wrap: balance;
+}
+
+.home-definition h2 {
+  font-size: var(--type-size-2xl);
+}
+
+.home-definition p,
+.integration-example p {
+  max-width: 42rem;
+  color: var(--muted-foreground);
+  line-height: var(--type-leading-body);
+  text-wrap: pretty;
+}
+
+.integration-section {
+  display: grid;
+  gap: 3rem;
+}
+
+.integration-section > header {
+  display: grid;
+  max-width: 52rem;
+  gap: 1rem;
+}
+
+.integration-section h2 {
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
+  letter-spacing: var(--type-tracking-tight);
+}
+
+.integration-list {
+  border-top: 1px solid var(--border-strong);
+}
+
+.integration-example {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  padding-block: clamp(2rem, 5vw, 4rem);
+  border-bottom: 1px solid var(--border);
+}
+
+.integration-copy {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  align-content: start;
+  gap: 1rem;
+}
+
+.integration-copy > span {
+  color: var(--muted-foreground);
+  font-size: var(--type-size-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.integration-copy > div {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.integration-example h3 {
+  font-size: var(--type-size-xl);
+}
+
+.integration-example .code-block {
+  align-self: start;
+  border-radius: var(--radius-sm);
+  white-space: pre-wrap;
+}
+
 .page-heading {
   max-width: 48rem;
 }
@@ -1016,6 +1183,14 @@ html[data-compact-visual-viewport="true"] .principles {
     gap: 3rem;
   }
 
+  .home-page .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .home-page .hero-copy {
+    position: static;
+  }
+
   .hero-copy h1 {
     max-width: 12ch;
   }
@@ -1068,7 +1243,8 @@ html[data-compact-visual-viewport="true"] .principles {
   }
 
   .principles,
-  .showroom-block {
+  .showroom-block,
+  .integration-example {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }

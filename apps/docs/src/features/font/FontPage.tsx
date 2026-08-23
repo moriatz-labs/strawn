@@ -18,7 +18,7 @@ const fontMetrics = [
 ] as const;
 
 export function FontPage() {
-  const [weight, setWeight] = useState(500);
+  const [weight, setWeight] = useState(550);
   const [size, setSize] = useState(160);
   const [spacing, setSpacing] = useState(4);
   const [sample, setSample] = useState("Moriatz Sans");
