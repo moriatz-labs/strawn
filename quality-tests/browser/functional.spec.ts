@@ -7,7 +7,9 @@ test("@functional renders the documentation shell without console errors", async
     if (message.type() === "error") errors.push(message.text());
   });
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("TOOLS WITH A CLEAR THREAD.");
+  const heading = page.getByRole("heading", { level: 1 });
+  await expect(heading).toHaveText("Tools with a clear thread.");
+  await expect(heading).toHaveCSS("text-transform", "none");
   const headingSize = await page.getByRole("heading", { level: 1 }).evaluate((heading) => Number.parseFloat(getComputedStyle(heading).fontSize));
   expect(headingSize).toBeGreaterThanOrEqual(40);
   await expect(page.getByRole("navigation", { name: "Documentation" })).toBeVisible();
@@ -59,6 +61,30 @@ test("@functional Moriatz Sans owns every typography role", async ({ page }) => 
   ));
   expect(families.length).toBeGreaterThanOrEqual(4);
   for (const family of families) expect(family).toContain("Moriatz Sans Variable");
+});
+
+test("@functional Moriatz Sans balances mixed-case cap, x-height, ascender, and descender zones", async ({ page }) => {
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+
+  const metrics = await page.getByRole("heading", { level: 1 }).evaluate((heading) => {
+    const style = getComputedStyle(heading);
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    if (!context) throw new Error("Canvas context is unavailable");
+    context.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+    const measure = (glyph: string) => {
+      const result = context.measureText(glyph);
+      return { ascent: result.actualBoundingBoxAscent, descent: result.actualBoundingBoxDescent };
+    };
+    return { cap: measure("T"), xHeight: measure("o"), ascender: measure("h"), descender: measure("g") };
+  });
+
+  expect(metrics.xHeight.ascent / metrics.cap.ascent).toBeGreaterThan(0.65);
+  expect(metrics.xHeight.ascent / metrics.cap.ascent).toBeLessThan(0.8);
+  expect(metrics.ascender.ascent / metrics.cap.ascent).toBeGreaterThan(0.85);
+  expect(metrics.ascender.ascent).toBeGreaterThan(metrics.xHeight.ascent);
+  expect(metrics.descender.descent).toBeGreaterThan(0);
 });
 
 test("@functional font page exposes an editable variable-weight specimen", async ({ page }) => {

@@ -8,7 +8,7 @@ const weightSpecimens = [
   { weight: 700, label: "Structural" },
 ] as const;
 
-const glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789 !?@#%&·–—";
+const glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 !?@#%&·–—";
 const inspectorGlyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.!?";
 const fontMetrics = [
   { label: "Cap height", value: 720 },
@@ -21,7 +21,7 @@ export function FontPage() {
   const [weight, setWeight] = useState(400);
   const [size, setSize] = useState(160);
   const [spacing, setSpacing] = useState(4);
-  const [sample, setSample] = useState("MORIATZ LABS");
+  const [sample, setSample] = useState("Moriatz Sans");
   const [inspectedGlyph, setInspectedGlyph] = useState("T");
   const variableStyle = {
     fontVariationSettings: `"wght" ${weight}`,
@@ -34,14 +34,14 @@ export function FontPage() {
         <div className="font-page-meta">
           <span>Moriatz Sans</span>
           <span>Variable 100—700</span>
-          <span>Version 0.3</span>
+          <span>Version 0.4</span>
         </div>
         <h1 aria-label="Moriatz Sans">
           <span>MORIATZ</span>
           <span>SANS</span>
         </h1>
         <div className="font-page-intro">
-          <p>An original tapered system face. Dark enough for product surfaces, with every glyph aligned to shared metric zones.</p>
+          <p>An original tapered system face with true lowercase forms designed to sit naturally beside its architectural capitals.</p>
           <a href="https://github.com/moriatz-labs/moriatz-sans/releases/latest">Download the family <span aria-hidden="true">↗</span></a>
         </div>
         <dl className="font-metric-summary">
@@ -129,7 +129,7 @@ export function FontPage() {
           <span>Sample text</span>
           <input value={sample} maxLength={36} onChange={(event) => setSample(event.target.value)} />
         </label>
-        <p className="font-live-sample" data-testid="font-live-sample" style={{ ...variableStyle, fontSize: `min(${size}px, 20vw)`, letterSpacing: `${spacing / 100}em` }}>{sample || "MORIATZ SANS"}</p>
+        <p className="font-live-sample" data-testid="font-live-sample" style={{ ...variableStyle, fontSize: `min(${size}px, 20vw)`, letterSpacing: `${spacing / 100}em` }}>{sample || "Moriatz Sans"}</p>
       </section>
 
       <section className="font-weight-spectrum" aria-labelledby="weight-spectrum-title">
@@ -156,7 +156,7 @@ export function FontPage() {
           <span>03</span>
           <div>
             <h2 id="glyph-title">The system alphabet</h2>
-            <p>Architectural capitals, compact small capitals, numbers, and essential punctuation.</p>
+            <p>Architectural capitals, true lowercase with ascenders and descenders, numbers, and essential punctuation.</p>
           </div>
         </div>
         <p className="font-glyphs">{glyphs}</p>
