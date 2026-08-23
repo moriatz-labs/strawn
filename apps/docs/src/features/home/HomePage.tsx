@@ -34,7 +34,7 @@ export function HomePage() {
       <section className="hero">
         <div className="hero-copy">
           <Badge tone="info">React only</Badge>
-          <TextStyle as="h1" textStyle="headingXl">Tools with a clear thread.</TextStyle>
+          <TextStyle as="h1" textStyle="headingXl">TOOLS WITH A CLEAR THREAD.</TextStyle>
           <TextStyle as="p" textStyle="bodyLg" tone="muted">
             Strawn is Moriatz&apos;s React design system: precise foundations, accessible behavior, and a visual language built for serious product work.
           </TextStyle>
