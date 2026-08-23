@@ -102,6 +102,15 @@ test("@functional font page exposes an editable variable-weight specimen", async
   await page.getByRole("button", { name: "Inspect A", exact: true }).click();
   await expect(page.getByRole("img", { name: "A aligned to font metrics" })).toBeVisible();
   await expect(page.getByText("Cap height", { exact: true }).first()).toBeVisible();
+
+  await page.keyboard.press("ArrowRight");
+  const inspectB = page.getByRole("button", { name: "Inspect B", exact: true });
+  await expect(inspectB).toBeFocused();
+  await expect(inspectB).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("img", { name: "B aligned to font metrics" })).toBeVisible();
+
+  await page.keyboard.press("ArrowLeft");
+  await expect(page.getByRole("button", { name: "Inspect A", exact: true })).toBeFocused();
 });
 
 test("@functional documentation stays light when stored and system preferences are dark", async ({ page }) => {
