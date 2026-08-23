@@ -42,6 +42,10 @@ test("@functional font page exposes an editable variable-weight specimen", async
   const weightInput = page.getByLabel("Weight");
   await weightInput.fill("700");
   await expect(page.getByTestId("font-live-sample")).toHaveCSS("font-weight", "700");
+
+  await page.getByRole("button", { name: "Inspect A", exact: true }).click();
+  await expect(page.getByRole("img", { name: "A aligned to font metrics" })).toBeVisible();
+  await expect(page.getByText("Cap height", { exact: true }).first()).toBeVisible();
 });
 
 test("@functional documentation stays light when stored and system preferences are dark", async ({ page }) => {

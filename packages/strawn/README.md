@@ -5,7 +5,7 @@ Strawn - Moriatz's official design system. This package provides its accessible 
 Install Strawn, its icon package, and the canonical variable fonts:
 
 ```sh
-bun add strawn strawn-icons github:moriatz-labs/moriatz-sans#v0.2.0
+bun add strawn strawn-icons github:moriatz-labs/moriatz-sans#v0.3.0
 ```
 
 Load the font styles once at the application entry point, before rendering `ThemeProvider`:
