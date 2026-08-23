@@ -1,5 +1,11 @@
 # strawn
 
+## 0.4.0
+
+### Minor Changes
+
+- 1b63aa1: Replace every Strawn typography role with Moriatz Sans, add a dedicated display-tracking token, and document the original tapered, toothpick-stroke variable font setup.
+
 ## 0.3.0
 
 ### Minor Changes
