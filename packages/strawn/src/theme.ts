@@ -70,9 +70,9 @@ export const defaultTheme: ThemeTokens = {
     trackingDisplay: "0.07em",
     trackingNormal: "0",
     trackingCaps: "0.09em",
-    weightRegular: "400",
-    weightMedium: "500",
-    weightSemibold: "600",
+    weightRegular: "500",
+    weightMedium: "600",
+    weightSemibold: "650",
     weightBold: "700",
   },
   space: {

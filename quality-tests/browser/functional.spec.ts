@@ -61,6 +61,7 @@ test("@functional Moriatz Sans owns every typography role", async ({ page }) => 
   ));
   expect(families.length).toBeGreaterThanOrEqual(4);
   for (const family of families) expect(family).toContain("Moriatz Sans Variable");
+  await expect(page.locator("body")).toHaveCSS("font-weight", "500");
 });
 
 test("@functional Moriatz Sans balances mixed-case cap, x-height, ascender, and descender zones", async ({ page }) => {

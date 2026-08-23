@@ -32,6 +32,7 @@ export const applyGlobalStyles = globalCss({
     color: "$foreground",
     fontFamily: "$ui",
     fontSize: "$md",
+    fontWeight: "$regular",
     lineHeight: "$base",
     WebkitFontSmoothing: "antialiased",
     MozOsxFontSmoothing: "grayscale",
