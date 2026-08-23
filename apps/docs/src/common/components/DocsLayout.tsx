@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { NavLink, Route, Routes } from "react-router-dom";
 import { GitHubIcon } from "strawn-icons";
 import { NavbarLink, TextStyle } from "strawn";
@@ -11,6 +12,35 @@ import { NavbarLabPage } from "../../features/navigation/NavbarLabPage";
 import { ThemingPage } from "../../features/theming/ThemingPage";
 
 export function DocsLayout() {
+  useEffect(() => {
+    const root = document.documentElement;
+    const visualViewport = window.visualViewport;
+
+    const syncVisualViewport = () => {
+      const visualWidth = visualViewport?.width ?? window.innerWidth;
+      const isConstrained = visualWidth < window.innerWidth * 0.85;
+
+      if (isConstrained) {
+        root.dataset.compactVisualViewport = "true";
+        root.style.setProperty("--docs-visual-viewport-width", `${visualWidth}px`);
+      } else {
+        delete root.dataset.compactVisualViewport;
+        root.style.removeProperty("--docs-visual-viewport-width");
+      }
+    };
+
+    syncVisualViewport();
+    visualViewport?.addEventListener("resize", syncVisualViewport);
+    window.addEventListener("resize", syncVisualViewport);
+
+    return () => {
+      visualViewport?.removeEventListener("resize", syncVisualViewport);
+      window.removeEventListener("resize", syncVisualViewport);
+      delete root.dataset.compactVisualViewport;
+      root.style.removeProperty("--docs-visual-viewport-width");
+    };
+  }, []);
+
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>

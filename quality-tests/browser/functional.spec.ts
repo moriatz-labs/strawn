@@ -14,6 +14,36 @@ test("@functional renders the documentation shell without console errors", async
   expect(errors).toEqual([]);
 });
 
+test("@functional constrains the homepage to a narrower visual viewport", async ({ browser }) => {
+  const visualWidth = 862;
+  const context = await browser.newContext({ viewport: { width: 1366, height: 958 } });
+  await context.addInitScript((width) => {
+    Object.defineProperty(window, "visualViewport", {
+      configurable: true,
+      value: {
+        width,
+        addEventListener: () => undefined,
+        removeEventListener: () => undefined,
+      },
+    });
+  }, visualWidth);
+  const page = await context.newPage();
+
+  await page.goto("/");
+  await expect(page.locator("html")).toHaveAttribute("data-compact-visual-viewport", "true");
+
+  for (const selector of [".docs-marketing-nav", ".page-shell", ".hero", ".thread-console", ".principles"]) {
+    const box = await page.locator(selector).boundingBox();
+    expect(box, selector).not.toBeNull();
+    expect(box!.x, selector).toBeGreaterThanOrEqual(0);
+    expect(box!.x + box!.width, selector).toBeLessThanOrEqual(visualWidth + 1);
+  }
+
+  const heroColumns = await page.locator(".hero").evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(" "));
+  expect(heroColumns).toHaveLength(1);
+  await context.close();
+});
+
 test("@functional thread signature updates its live readout", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: /Language/ }).click();
