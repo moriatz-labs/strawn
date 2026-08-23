@@ -1,7 +1,11 @@
+import type { ComponentType } from "react";
 import { Box, Card, CardContent, Stack, TextStyle } from "strawn";
-import { CalendarIcon, CheckIcon, CloseIcon, DownloadIcon, GitHubIcon, SearchIcon, SettingsIcon, UploadIcon, UserIcon, WarningIcon } from "./iconImports";
+import * as iconLibrary from "strawn-icons";
+import type { IconProps } from "strawn-icons";
 
-const icons = { CalendarIcon, CheckIcon, CloseIcon, DownloadIcon, GitHubIcon, SearchIcon, SettingsIcon, UploadIcon, UserIcon, WarningIcon };
+const icons = Object.entries(iconLibrary)
+  .sort(([first], [second]) => first.localeCompare(second))
+  .slice(0, 110) as [string, ComponentType<IconProps>][];
 
 export function IconsPage() {
   return (
@@ -12,7 +16,7 @@ export function IconsPage() {
         <TextStyle as="p" textStyle="bodyLg" tone="muted">Named React exports, currentColor by default, and no catalog subpath.</TextStyle>
       </header>
       <section className="icon-grid" aria-label="Selected icons">
-        {Object.entries(icons).map(([name, Icon]) => (
+        {icons.map(([name, Icon]) => (
           <Card key={name}>
             <CardContent className="icon-card">
               <Box aria-hidden="true"><Icon size={24} /></Box>

@@ -67,6 +67,30 @@ test("@functional Moriatz Sans owns every typography role", async ({ page }) => 
   await expect(page.locator("body")).toHaveCSS("font-weight", "550");
 });
 
+test("@functional navigation keeps the brand static and refines the GitHub action", async ({ page }) => {
+  await page.goto("/");
+  const brand = page.getByRole("link", { name: "Strawn home" });
+  await brand.hover();
+  await expect(brand).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+
+  const fontLink = page.getByRole("link", { name: "Font", exact: true });
+  await fontLink.hover();
+  await expect(fontLink).not.toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+
+  const github = page.getByRole("link", { name: "GitHub", exact: true });
+  const box = await github.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.width).toBeGreaterThanOrEqual(112);
+  expect(box!.height).toBeGreaterThanOrEqual(44);
+  await expect(github).toHaveCSS("padding-left", "18px");
+  await expect(github).toHaveCSS("padding-right", "20px");
+});
+
+test("@functional icon catalog exposes 110 typed React icons", async ({ page }) => {
+  await page.goto("/icons");
+  await expect(page.locator(".icon-card")).toHaveCount(110);
+});
+
 test("@functional Moriatz Sans balances mixed-case cap, x-height, ascender, and descender zones", async ({ page }) => {
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
@@ -100,6 +124,7 @@ test("@functional font page exposes an editable variable-weight specimen", async
   await expect(page.getByTestId("font-live-sample")).toHaveText("DARKER SYSTEMS");
 
   const weightInput = page.getByLabel("Weight");
+  await expect(weightInput).toHaveValue("500");
   await weightInput.fill("700");
   await expect(page.getByTestId("font-live-sample")).toHaveCSS("font-weight", "700");
 

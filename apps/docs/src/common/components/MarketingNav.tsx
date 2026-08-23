@@ -32,7 +32,7 @@ export function MarketingNav({ brand, items, action }: MarketingNavProps) {
         </NavbarLinks>
         <NavbarActions className="docs-marketing-nav-actions">
           {action ? (
-            <NavbarAction href={action.href} target={action.external ? "_blank" : undefined} rel={action.external ? "noreferrer" : undefined}>
+            <NavbarAction className="marketing-nav-action" href={action.href} target={action.external ? "_blank" : undefined} rel={action.external ? "noreferrer" : undefined}>
               {action.icon}
               {action.label}
             </NavbarAction>
