@@ -17,8 +17,18 @@ test("@functional renders the documentation shell without console errors", async
 test("@functional thread signature updates its live readout", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: /Language/ }).click();
-  await expect(page.getByTestId("thread-readout")).toContainText("3 faces");
-  await expect(page.getByTestId("thread-readout")).toContainText("Bricolage");
+  await expect(page.getByTestId("thread-readout")).toContainText("1 face");
+  await expect(page.getByTestId("thread-readout")).toContainText("Moriatz Sans");
+});
+
+test("@functional Moriatz Sans owns every typography role", async ({ page }) => {
+  await page.goto("/theming");
+  await page.evaluate(() => document.fonts.ready);
+  const families = await page.locator("body, h1, button, code").evaluateAll((elements) => (
+    elements.map((element) => getComputedStyle(element).fontFamily)
+  ));
+  expect(families.length).toBeGreaterThanOrEqual(4);
+  for (const family of families) expect(family).toContain("Moriatz Sans Variable");
 });
 
 test("@functional documentation stays light when stored and system preferences are dark", async ({ page }) => {

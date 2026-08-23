@@ -4,19 +4,19 @@ export const StyledHeading = styled("h2", {
   fontFamily: "$heading",
   fontWeight: "$semibold",
   lineHeight: "$snug",
-  letterSpacing: "$heading",
+  letterSpacing: "$display",
   color: "$foreground",
   textWrap: "balance",
   variants: {
     size: {
       h1: {
         fontSize: "$4xl",
-        letterSpacing: "$tight",
+        letterSpacing: "$display",
         lineHeight: "$tight",
       },
       h2: {
         fontSize: "$3xl",
-        letterSpacing: "$tight",
+        letterSpacing: "$display",
         lineHeight: "$tight",
       },
       h3: {

@@ -5,15 +5,13 @@ Strawn - Moriatz's official design system. This package provides its accessible 
 Install Strawn, its icon package, and the canonical variable fonts:
 
 ```sh
-bun add strawn strawn-icons @fontsource-variable/bricolage-grotesque @fontsource-variable/geist @fontsource-variable/geist-mono
+bun add strawn strawn-icons github:moriatz-labs/moriatz-sans#v0.1.0
 ```
 
 Load the font styles once at the application entry point, before rendering `ThemeProvider`:
 
 ```tsx
-import "@fontsource-variable/bricolage-grotesque/wght.css";
-import "@fontsource-variable/geist/wght.css";
-import "@fontsource-variable/geist-mono/wght.css";
+import "moriatz-sans";
 import { Button, ThemeProvider } from "strawn";
 
 <ThemeProvider>
@@ -21,4 +19,4 @@ import { Button, ThemeProvider } from "strawn";
 </ThemeProvider>;
 ```
 
-Bricolage Grotesque is the display face, Geist is used for interface and body copy, and Geist Mono is used for code and data.
+Moriatz Sans is Strawn's complete typographic voice. The same original variable family is used for interface controls, body copy, headings, code, data, and brand moments.

@@ -13,8 +13,8 @@ const threadSteps = [
   {
     id: "language",
     label: "Language",
-    value: "3 faces",
-    detail: "Bricolage for signal, Geist for work, Geist Mono for data.",
+    value: "1 face",
+    detail: "Moriatz Sans carries interface, body, display, code, and data.",
   },
   {
     id: "behavior",

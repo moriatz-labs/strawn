@@ -39,6 +39,7 @@ export const applyGlobalStyles = globalCss({
   "h1, h2, h3, h4, h5, h6, p": { margin: 0 },
   "h1, h2, h3, h4, h5, h6": { textWrap: "balance" },
   "p, li, figcaption, blockquote": { textWrap: "pretty" },
+  "code, kbd, pre, samp": { fontFamily: "$mono" },
   a: { color: "inherit" },
   "button, input, textarea, select": { font: "inherit" },
   "img, svg, video, canvas, audio, iframe, embed, object": { display: "block" },
