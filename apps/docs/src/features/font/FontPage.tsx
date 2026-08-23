@@ -18,7 +18,7 @@ const fontMetrics = [
 ] as const;
 
 export function FontPage() {
-  const [weight, setWeight] = useState(550);
+  const [weight, setWeight] = useState(500);
   const [size, setSize] = useState(160);
   const [spacing, setSpacing] = useState(4);
   const [sample, setSample] = useState("Moriatz Sans");
@@ -51,7 +51,7 @@ export function FontPage() {
         <div className="font-page-meta">
           <span>Moriatz Sans</span>
           <span>Variable 100—700</span>
-          <span>Version 0.5</span>
+          <span>Version 0.6</span>
         </div>
         <h1 aria-label="Moriatz Sans">
           <span>MORIATZ</span>
@@ -191,7 +191,7 @@ export function FontPage() {
         </div>
         <dl>
           <div><dt>Axis</dt><dd>Weight, 100—700</dd></div>
-          <div><dt>Default</dt><dd>300 Signature</dd></div>
+          <div><dt>Default</dt><dd>500 Dense</dd></div>
           <div><dt>Alignment</dt><dd>720 cap · 520 x-height · 0 baseline</dd></div>
           <div><dt>Coverage</dt><dd>Basic Latin + display punctuation</dd></div>
           <div><dt>Formats</dt><dd>Variable TTF, WOFF2, Regular TTF</dd></div>
