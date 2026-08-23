@@ -23,14 +23,14 @@ type MarketingNavProps = {
 export function MarketingNav({ brand, items, action }: MarketingNavProps) {
   return (
     <header>
-      <Navbar aria-label="Documentation" css={{ margin: "$3 auto", maxWidth: "$container", width: "calc(100% - $space$8)", position: "sticky", top: "$3", zIndex: "$header" }}>
+      <Navbar className="docs-marketing-nav" aria-label="Documentation" css={{ margin: "$3 auto", maxWidth: "$container", width: "calc(100% - $space$8)", position: "sticky", top: "$3", zIndex: "$header" }}>
         <NavbarBrand>{brand}</NavbarBrand>
-        <NavbarLinks>
+        <NavbarLinks className="docs-marketing-nav-links">
           {items.map((item) => (
             <NavbarLink key={item.to} as={NavLink} to={item.to}>{item.label}</NavbarLink>
           ))}
         </NavbarLinks>
-        <NavbarActions>
+        <NavbarActions className="docs-marketing-nav-actions">
           {action ? (
             <NavbarAction href={action.href} target={action.external ? "_blank" : undefined} rel={action.external ? "noreferrer" : undefined}>
               {action.icon}

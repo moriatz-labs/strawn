@@ -509,6 +509,39 @@ body {
   padding-block: clamp(3.5rem, 8vw, 7rem);
 }
 
+html[data-compact-visual-viewport="true"] .docs-marketing-nav {
+  width: calc(var(--docs-visual-viewport-width) - 2rem) !important;
+  max-width: none !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-inline: 1rem 0 !important;
+  border-radius: var(--radius-lg);
+}
+
+html[data-compact-visual-viewport="true"] .docs-marketing-nav-links {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+
+html[data-compact-visual-viewport="true"] .docs-marketing-nav-actions {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+html[data-compact-visual-viewport="true"] .page-shell {
+  width: calc(var(--docs-visual-viewport-width) - 2rem);
+  max-width: none;
+  margin-inline: 1rem 0;
+}
+
+html[data-compact-visual-viewport="true"] .hero,
+html[data-compact-visual-viewport="true"] .principles {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 3rem;
+}
+
 .hero {
   display: grid;
   min-height: 34rem;
@@ -1332,6 +1365,10 @@ body {
 
   .hero-copy h1 {
     max-width: 12ch;
+  }
+
+  .font-lab-controls {
+    grid-template-columns: 1fr;
   }
 
   .component-showroom {

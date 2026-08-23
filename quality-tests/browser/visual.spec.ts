@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 
-const widths = [320, 375, 768, 1440, 1920];
+const widths = [320, 375, 768, 862, 1440, 1920];
 
 async function horizontalLayout(page: Page) {
   return page.evaluate(() => ({
