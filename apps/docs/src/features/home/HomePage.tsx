@@ -40,7 +40,7 @@ export function HomePage() {
           </TextStyle>
           <Box css={{ display: "flex", flexWrap: "wrap", gap: "$3" }}>
             <Button onClick={() => navigate("/components")} rightIcon={<ArrowRightIcon aria-hidden="true" />}>Browse components</Button>
-            <Button onClick={() => navigate("/theming")} variant="outline">Inspect the theme</Button>
+            <Button onClick={() => navigate("/font")} variant="outline">Explore Moriatz Sans</Button>
           </Box>
         </div>
 

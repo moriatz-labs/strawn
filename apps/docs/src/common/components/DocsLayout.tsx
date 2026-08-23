@@ -8,8 +8,6 @@ import { CsvImportDialogPage } from "../../features/csv/CsvImportDialogPage";
 import { FontPage } from "../../features/font/FontPage";
 import { HomePage } from "../../features/home/HomePage";
 import { IconsPage } from "../../features/icons/IconsPage";
-import { NavbarLabPage } from "../../features/navigation/NavbarLabPage";
-import { ThemingPage } from "../../features/theming/ThemingPage";
 
 export function DocsLayout() {
   useEffect(() => {
@@ -54,8 +52,6 @@ export function DocsLayout() {
           { label: "Components", to: "/components" },
           { label: "Icons", to: "/icons" },
           { label: "Font", to: "/font" },
-          { label: "Theming", to: "/theming" },
-          { label: "Nav lab", to: "/navbar-lab" },
         ]}
         action={{
           label: "GitHub",
@@ -71,8 +67,6 @@ export function DocsLayout() {
           <Route path="/components/csv-import-dialog" element={<CsvImportDialogPage />} />
           <Route path="/icons" element={<IconsPage />} />
           <Route path="/font" element={<FontPage />} />
-          <Route path="/navbar-lab" element={<NavbarLabPage />} />
-          <Route path="/theming" element={<ThemingPage />} />
         </Routes>
       </main>
     </>

@@ -50,19 +50,6 @@ for (const width of widths) {
     expect(fontPageBox!.x).toBeGreaterThanOrEqual(0);
     expect(fontPageBox!.x + fontPageBox!.width).toBeLessThanOrEqual(fontMetrics.viewport + 1);
 
-    await page.goto("/navbar-lab");
-    await expect(page.getByRole("heading", { level: 1, name: "Glass, with structure." })).toBeVisible();
-    await expect(page.locator("main nav[aria-label$='preview']")).toHaveCount(5);
-    const navbarMetrics = await horizontalLayout(page);
-    expect(navbarMetrics.overflow, JSON.stringify(navbarMetrics.offenders)).toBe(false);
-    const compactActions = await page.locator("main .glass-nav-action").all();
-    for (const action of compactActions) {
-      const actionBox = await action.boundingBox();
-      expect(actionBox).not.toBeNull();
-      expect(actionBox!.height).toBeGreaterThanOrEqual(44);
-      expect(actionBox!.width).toBeLessThanOrEqual(width <= 480 ? 46 : 96);
-    }
-
     await page.goto("/components/csv-import-dialog");
     await page.getByRole("button", { name: "Import CSV" }).click();
     await expect(page.getByRole("dialog", { name: "Import CSV" })).toBeVisible();

@@ -135,23 +135,6 @@ test("@functional removable badge keeps a 44px keyboard-operable target", async 
   await expect(removeButton).toHaveCount(0);
 });
 
-test("@functional navbar lab compares five compact keyboard-operable glass directions", async ({ page }) => {
-  await page.goto("/navbar-lab");
-  await expect(page.getByRole("heading", { level: 1, name: "Glass, with structure." })).toBeVisible();
-  await expect(page.locator("main nav[aria-label$='preview']")).toHaveCount(5);
-
-  for (const action of await page.locator("main .glass-nav-action").all()) {
-    const box = await action.boundingBox();
-    expect(box).not.toBeNull();
-    expect(box!.height).toBeGreaterThanOrEqual(44);
-    expect(box!.width).toBeLessThanOrEqual(96);
-  }
-
-  const firstAction = page.getByRole("link", { name: "GitHub, Original capsule preview" });
-  await firstAction.focus();
-  await expect(firstAction).toBeFocused();
-});
-
 test("@functional CSV dialog opens only from its trigger and accepts a file", async ({ page }) => {
   await page.goto("/components/csv-import-dialog");
   await expect(page.getByRole("dialog", { name: "Import CSV" })).toHaveCount(0);
@@ -169,7 +152,7 @@ test("@functional CSV dialog opens only from its trigger and accepts a file", as
 });
 
 test("@functional has no serious accessibility violations", async ({ page }) => {
-  for (const path of ["/", "/components", "/components/csv-import-dialog", "/icons", "/font", "/navbar-lab", "/theming"]) {
+  for (const path of ["/", "/components", "/components/csv-import-dialog", "/icons", "/font"]) {
     await page.goto(path);
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations.filter(({ impact }) => impact === "serious" || impact === "critical"), path).toEqual([]);
