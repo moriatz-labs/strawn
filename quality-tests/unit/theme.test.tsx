@@ -37,9 +37,9 @@ describe("Strawn theming", () => {
     expect(defaultTheme.fonts.heading).toContain("Moriatz Sans Variable");
     expect(new Set(Object.values(defaultTheme.fonts))).toEqual(new Set([defaultTheme.fonts.heading]));
     expect(defaultTheme.typography.trackingDisplay).toBe("0.07em");
-    expect(defaultTheme.typography.weightRegular).toBe("500");
-    expect(defaultTheme.typography.weightMedium).toBe("600");
-    expect(defaultTheme.typography.weightSemibold).toBe("650");
+    expect(defaultTheme.typography.weightRegular).toBe("550");
+    expect(defaultTheme.typography.weightMedium).toBe("625");
+    expect(defaultTheme.typography.weightSemibold).toBe("675");
     expect(defaultTheme.typography.weightBold).toBe("700");
     expect(Number(defaultTheme.layers.dropdown)).toBeLessThan(Number(defaultTheme.layers.modal));
     expect(Number(defaultTheme.layers.modal)).toBeLessThan(Number(defaultTheme.layers.tooltip));

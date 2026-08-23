@@ -8,7 +8,7 @@ test("@functional renders the documentation shell without console errors", async
   });
   await page.goto("/");
   const heading = page.getByRole("heading", { level: 1 });
-  await expect(heading).toHaveText("Tools with a clear thread.");
+  await expect(heading).toHaveText("One font. One React icon library.");
   await expect(heading).toHaveCSS("text-transform", "none");
   const headingSize = await page.getByRole("heading", { level: 1 }).evaluate((heading) => Number.parseFloat(getComputedStyle(heading).fontSize));
   expect(headingSize).toBeGreaterThanOrEqual(40);
@@ -34,7 +34,7 @@ test("@functional constrains the homepage to a narrower visual viewport", async 
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("data-compact-visual-viewport", "true");
 
-  for (const selector of [".docs-marketing-nav", ".page-shell", ".hero", ".thread-console", ".principles"]) {
+  for (const selector of [".docs-marketing-nav", ".page-shell", ".hero", ".home-definition", ".integration-section"]) {
     const box = await page.locator(selector).boundingBox();
     expect(box, selector).not.toBeNull();
     expect(box!.x, selector).toBeGreaterThanOrEqual(0);
@@ -46,11 +46,14 @@ test("@functional constrains the homepage to a narrower visual viewport", async 
   await context.close();
 });
 
-test("@functional thread signature updates its live readout", async ({ page }) => {
+test("@functional homepage defines only the font and React icons", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: /Language/ }).click();
-  await expect(page.getByTestId("thread-readout")).toContainText("1 face");
-  await expect(page.getByTestId("thread-readout")).toContainText("Moriatz Sans");
+  await expect(page.getByRole("heading", { name: "Variable web font" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "React SVG components" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Vite + React" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Next.js App Router" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Remix" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Components" })).toHaveCount(0);
 });
 
 test("@functional Moriatz Sans owns every typography role", async ({ page }) => {
@@ -61,7 +64,7 @@ test("@functional Moriatz Sans owns every typography role", async ({ page }) => 
   ));
   expect(families.length).toBeGreaterThanOrEqual(4);
   for (const family of families) expect(family).toContain("Moriatz Sans Variable");
-  await expect(page.locator("body")).toHaveCSS("font-weight", "500");
+  await expect(page.locator("body")).toHaveCSS("font-weight", "550");
 });
 
 test("@functional Moriatz Sans balances mixed-case cap, x-height, ascender, and descender zones", async ({ page }) => {
@@ -133,36 +136,14 @@ test("@functional documentation stays light when stored and system preferences a
   expect(results.violations.filter(({ impact }) => impact === "serious" || impact === "critical")).toEqual([]);
 });
 
-test("@functional removable badge keeps a 44px keyboard-operable target", async ({ page }) => {
+test("@functional removed component routes return to the font-and-icons homepage", async ({ page }) => {
   await page.goto("/components");
-  const removeButton = page.getByRole("button", { name: "Remove Generic tag" });
-  const box = await removeButton.boundingBox();
-  expect(box).not.toBeNull();
-  expect(box!.width).toBeGreaterThanOrEqual(44);
-  expect(box!.height).toBeGreaterThanOrEqual(44);
-  await removeButton.focus();
-  await page.keyboard.press("Enter");
-  await expect(removeButton).toHaveCount(0);
-});
-
-test("@functional CSV dialog opens only from its trigger and accepts a file", async ({ page }) => {
-  await page.goto("/components/csv-import-dialog");
-  await expect(page.getByRole("dialog", { name: "Import CSV" })).toHaveCount(0);
-  await page.getByRole("button", { name: "Import CSV" }).click();
-  const dialog = page.getByRole("dialog", { name: "Import CSV" });
-  await expect(dialog).toBeVisible();
-  await expect(page.getByRole("button", { name: "Choose CSV file" })).toBeFocused();
-  await page.locator('input[type="file"][aria-label="Choose CSV file"]').setInputFiles({
-    name: "people.csv",
-    mimeType: "text/csv",
-    buffer: Buffer.from("name,birthday\nAda,1815-12-10"),
-  });
-  await expect(dialog).toHaveCount(0);
-  await expect(page.getByText("Selected people.csv")).toBeVisible();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.getByRole("heading", { level: 1, name: "One font. One React icon library." })).toBeVisible();
 });
 
 test("@functional has no serious accessibility violations", async ({ page }) => {
-  for (const path of ["/", "/components", "/components/csv-import-dialog", "/icons", "/font"]) {
+  for (const path of ["/", "/icons", "/font"]) {
     await page.goto(path);
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations.filter(({ impact }) => impact === "serious" || impact === "critical"), path).toEqual([]);

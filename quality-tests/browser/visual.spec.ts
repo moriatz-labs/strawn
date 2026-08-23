@@ -18,7 +18,7 @@ for (const width of widths) {
     await page.setViewportSize({ width, height: 1000 });
 
     await page.goto("/");
-    await expect(page.getByRole("heading", { level: 1, name: "Tools with a clear thread." })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: "One font. One React icon library." })).toBeVisible();
     const homeMetrics = await horizontalLayout(page);
     expect(homeMetrics.overflow, JSON.stringify(homeMetrics.offenders)).toBe(false);
     const heroBox = await page.locator(".hero").boundingBox();
@@ -32,15 +32,6 @@ for (const width of widths) {
     }));
     expect(palette).toEqual({ background: "#ffffff", surface: "#ffffff", primary: "#0a0a0a" });
 
-    await page.goto("/components");
-    await expect(page.getByRole("heading", { level: 1, name: "A precise kit for product work." })).toBeVisible();
-    const componentMetrics = await horizontalLayout(page);
-    expect(componentMetrics.overflow, JSON.stringify(componentMetrics.offenders)).toBe(false);
-    const workflowBox = await page.locator(".workflow-specimen").boundingBox();
-    expect(workflowBox).not.toBeNull();
-    expect(workflowBox!.x).toBeGreaterThanOrEqual(0);
-    expect(workflowBox!.x + workflowBox!.width).toBeLessThanOrEqual(componentMetrics.viewport + 1);
-
     await page.goto("/font");
     await expect(page.getByRole("heading", { level: 1, name: "Moriatz Sans" })).toBeVisible();
     const fontMetrics = await horizontalLayout(page);
@@ -49,18 +40,5 @@ for (const width of widths) {
     expect(fontPageBox).not.toBeNull();
     expect(fontPageBox!.x).toBeGreaterThanOrEqual(0);
     expect(fontPageBox!.x + fontPageBox!.width).toBeLessThanOrEqual(fontMetrics.viewport + 1);
-
-    await page.goto("/components/csv-import-dialog");
-    await page.getByRole("button", { name: "Import CSV" }).click();
-    await expect(page.getByRole("dialog", { name: "Import CSV" })).toBeVisible();
-    const metrics = await page.evaluate(() => ({
-      overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
-      viewport: document.documentElement.clientWidth,
-    }));
-    expect(metrics.overflow).toBe(false);
-    const box = await page.getByRole("button", { name: "Choose CSV file" }).boundingBox();
-    expect(box).not.toBeNull();
-    expect(box!.width).toBeLessThanOrEqual(metrics.viewport - (width <= 375 ? 32 : 48));
-    expect(box!.height).toBeGreaterThanOrEqual(180);
   });
 }
