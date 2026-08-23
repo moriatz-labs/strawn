@@ -219,7 +219,10 @@ body {
   border-radius: 999px;
   background: var(--accent);
   color: var(--accent-foreground);
-  font: var(--type-weight-semibold) var(--type-size-xs) / 1 var(--font-mono);
+  font-family: var(--font-mono);
+  font-size: var(--type-size-xs);
+  font-weight: var(--type-weight-semibold);
+  line-height: 1;
 }
 
 .navbar-specimen-stage {
@@ -943,6 +946,30 @@ body {
   text-align: left;
 }
 
+.font-specimen {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.font-specimen > div {
+  display: grid;
+  gap: 0.75rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.font-specimen > div p {
+  max-width: 42rem;
+}
+
+.font-specimen img {
+  width: 100%;
+  height: auto;
+  outline: 0;
+}
+
 .code-block {
   overflow-x: auto;
   margin: 0;
@@ -950,7 +977,13 @@ body {
   border-radius: var(--radius-md);
   background: var(--inverse);
   color: var(--inverse-foreground);
-  font: 0.875rem/1.65 var(--font-mono);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+.code-block code {
+  font: inherit;
 }
 
 @media (max-width: 64rem) {

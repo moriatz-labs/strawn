@@ -34,6 +34,9 @@ describe("Strawn theming", () => {
     expect(defaultTheme.colors.primary).not.toBe(defaultTheme.colors.accent);
     expect(defaultTheme.controls.heightDefault).toBe("2.75rem");
     expect(defaultTheme.shadows.card).toBe("none");
+    expect(defaultTheme.fonts.heading).toContain("Moriatz Sans Variable");
+    expect(new Set(Object.values(defaultTheme.fonts))).toEqual(new Set([defaultTheme.fonts.heading]));
+    expect(defaultTheme.typography.trackingDisplay).toBe("0.07em");
     expect(Number(defaultTheme.layers.dropdown)).toBeLessThan(Number(defaultTheme.layers.modal));
     expect(Number(defaultTheme.layers.modal)).toBeLessThan(Number(defaultTheme.layers.tooltip));
   });

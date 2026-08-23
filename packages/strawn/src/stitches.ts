@@ -85,6 +85,7 @@ export const {
     letterSpacings: {
       tight: "var(--type-tracking-tight)",
       heading: "var(--type-tracking-heading)",
+      display: "var(--type-tracking-display)",
       normal: "var(--type-tracking-normal)",
       caps: "var(--type-tracking-caps)",
     },

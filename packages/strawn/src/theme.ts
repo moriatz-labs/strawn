@@ -5,9 +5,7 @@ import type {
   ThemeTokens,
 } from "./types/theme";
 
-const sans = '"Geist Variable", "Geist", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
-const display = '"Bricolage Grotesque Variable", "Bricolage Grotesque", "Geist Variable", "Geist", ui-sans-serif, system-ui, sans-serif';
-const mono = '"Geist Mono Variable", "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+const moriatzSans = '"Moriatz Sans Variable", "Moriatz Sans", ui-sans-serif, system-ui, sans-serif';
 
 export const defaultTheme: ThemeTokens = {
   colors: {
@@ -51,7 +49,7 @@ export const defaultTheme: ThemeTokens = {
     input: "#767676",
     ring: "#000000",
   },
-  fonts: { ui: sans, body: sans, heading: display, mono },
+  fonts: { ui: moriatzSans, body: moriatzSans, heading: moriatzSans, mono: moriatzSans },
   typography: {
     sizeXs: "0.75rem",
     sizeSm: "0.875rem",
@@ -69,6 +67,7 @@ export const defaultTheme: ThemeTokens = {
     leadingRelaxed: "1.75",
     trackingTight: "-0.035em",
     trackingHeading: "-0.02em",
+    trackingDisplay: "0.07em",
     trackingNormal: "0",
     trackingCaps: "0.09em",
     weightRegular: "400",
