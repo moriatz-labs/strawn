@@ -7,7 +7,7 @@ test("@functional renders the documentation shell without console errors", async
     if (message.type() === "error") errors.push(message.text());
   });
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("clear thread");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("TOOLS WITH A CLEAR THREAD.");
   const headingSize = await page.getByRole("heading", { level: 1 }).evaluate((heading) => Number.parseFloat(getComputedStyle(heading).fontSize));
   expect(headingSize).toBeGreaterThanOrEqual(40);
   await expect(page.getByRole("navigation", { name: "Documentation" })).toBeVisible();
