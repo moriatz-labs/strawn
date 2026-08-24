@@ -84,6 +84,11 @@ test("@functional navigation keeps the brand static and refines the GitHub actio
   expect(box!.height).toBeGreaterThanOrEqual(44);
   await expect(github).toHaveCSS("padding-left", "18px");
   await expect(github).toHaveCSS("padding-right", "20px");
+  await expect(github).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  expect(await github.evaluate((element) => getComputedStyle(element, "::before").content)).toBe("none");
+  await github.hover();
+  await expect(github).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  await expect(github).toHaveCSS("transform", "none");
 });
 
 test("@functional icon catalog exposes 110 typed React icons", async ({ page }) => {
