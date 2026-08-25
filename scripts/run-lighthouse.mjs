@@ -70,7 +70,7 @@ try {
     waitFor(`http://127.0.0.1:${debugPort}/json/version`),
   ]);
 
-  for (const [name, pathname] of [["root", "/"], ["font", "/font"], ["icons", "/icons"]]) {
+  for (const [name, pathname] of [["font", "/font"]]) {
     const reportPath = resolve(reports, `${name}.json`);
     await run("bun", [
       "x", "lighthouse", `http://127.0.0.1:${previewPort}${pathname}`,

@@ -2,7 +2,7 @@
   "ci": {
     "collect": {
       "staticDistDir": "./apps/docs/dist",
-      "url": ["http://localhost/", "http://localhost/components"],
+      "url": ["http://localhost/font"],
       "numberOfRuns": 1,
       "settings": {
         "chromeFlags": "--no-sandbox --headless=new",

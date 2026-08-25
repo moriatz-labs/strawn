@@ -1,6 +1,5 @@
 import { useState, type KeyboardEvent } from "react";
 import { FontHero } from "./FontHero";
-import { FontMaterialStory } from "./FontMaterialStory";
 import { fontFacts } from "./fontData";
 
 const weightSpecimens = [{ weight: 100, label: "Fine" }, { weight: 300, label: "Signature" }, { weight: 500, label: "Dense" }, { weight: 700, label: "Structural" }] as const;
@@ -8,12 +7,12 @@ const glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789
 const inspectorGlyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.!?";
 const secondaryLoopGlyphs = "bdhpq";
 const secondaryLoopHeight = 430;
+const defaultSample = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
 export function FontPage() {
   const [weight, setWeight] = useState(500);
-  const [size, setSize] = useState(160);
-  const [spacing, setSpacing] = useState(4);
-  const [sample, setSample] = useState("Moriatz Sans");
+  const [size, setSize] = useState(48);
+  const [sample, setSample] = useState(defaultSample);
   const [inspectedGlyph, setInspectedGlyph] = useState("T");
   const hasSecondaryLoopGuide = secondaryLoopGlyphs.includes(inspectedGlyph);
   const variableStyle = { fontVariationSettings: `"wght" ${weight}`, fontWeight: weight };
@@ -35,21 +34,19 @@ export function FontPage() {
   return (
     <div className="font-page">
       <FontHero />
-      <FontMaterialStory />
 
       <section className="font-lab" id="font-lab" aria-labelledby="font-lab-title">
-        <div className="font-tool-heading"><span>Test</span><div><h2 id="font-lab-title">Set the pressure.</h2><p>Adjust weight, size, and spacing. Type anything.</p></div></div>
+        <h2 className="font-playground-title" id="font-lab-title">Playground</h2>
         <div className="font-lab-controls">
           <label className="font-weight-control"><span>Weight</span><input id="font-weight" type="range" min="100" max="700" step="1" value={weight} onChange={(event) => setWeight(Number(event.target.value))} /><output htmlFor="font-weight">{weight}</output></label>
           <label className="font-weight-control"><span>Size</span><input type="range" min="48" max="200" step="1" value={size} onChange={(event) => setSize(Number(event.target.value))} /><output>{size}</output></label>
-          <label className="font-weight-control"><span>Spacing</span><input type="range" min="-5" max="20" step="1" value={spacing} onChange={(event) => setSpacing(Number(event.target.value))} /><output>{spacing}%</output></label>
         </div>
-        <label className="font-sample-input"><span>Sample text</span><input id="font-sample" value={sample} maxLength={48} onChange={(event) => setSample(event.target.value)} /></label>
-        <p className="font-live-sample" data-testid="font-live-sample" style={{ ...variableStyle, fontSize: `min(${size}px, 20vw)`, letterSpacing: `${spacing / 100}em` }}>{sample || "Moriatz Sans"}</p>
+        <label className="font-sample-input"><span>Sample text</span><input id="font-sample" value={sample} maxLength={160} onChange={(event) => setSample(event.target.value)} /></label>
+        <p className="font-live-sample" data-testid="font-live-sample" style={{ ...variableStyle, fontSize: `min(${size}px, 20vw)` }}>{sample || defaultSample}</p>
       </section>
 
       <section className="font-inspector" aria-labelledby="font-inspector-title">
-        <div className="font-tool-heading"><span>Inspect</span><div><h2 id="font-inspector-title">See where every stroke lands.</h2><p>Move through the characters with the arrow keys. Compare cap height, x-height, baseline, descender, and loop closure.</p></div></div>
+        <h2 className="font-inspector-title" id="font-inspector-title">Inspect</h2>
         <div className="font-inspector-stage">
           <svg viewBox="0 -820 1000 1040" role="img" aria-label={`${inspectedGlyph} aligned to font metrics${hasSecondaryLoopGuide ? ` with a secondary loop line at ${secondaryLoopHeight}` : ""}`}>
             <title>{inspectedGlyph} alignment inspector</title>
@@ -62,16 +59,16 @@ export function FontPage() {
       </section>
 
       <section className="font-weight-spectrum" aria-labelledby="weight-spectrum-title">
-        <div className="font-section-heading"><h2 id="weight-spectrum-title">One continuous voice.</h2><p>One skeleton, moving from Fine to Structural.</p></div>
-        <div className="font-weight-list">{weightSpecimens.map((specimen) => <article key={specimen.weight} style={{ fontVariationSettings: `"wght" ${specimen.weight}`, fontWeight: specimen.weight }}><span>{specimen.weight}</span><p>Moriatz Sans</p><span>{specimen.label}</span></article>)}</div>
+        <div className="font-section-heading"><h2 id="weight-spectrum-title">Weights</h2></div>
+        <div className="font-weight-list">{weightSpecimens.map((specimen) => <article key={specimen.weight} style={{ fontVariationSettings: `"wght" ${specimen.weight}`, fontWeight: specimen.weight }}><span>{specimen.weight}</span><p>Strawn</p><span>{specimen.label}</span></article>)}</div>
       </section>
 
       <section className="font-glyph-section" aria-labelledby="glyph-title">
-        <div className="font-section-heading"><h2 id="glyph-title">Every character in the current cut.</h2><p>Architectural capitals, true lowercase, numerals, and essential punctuation.</p></div><p className="font-glyphs">{glyphs}</p>
+        <div className="font-section-heading"><h2 id="glyph-title">Full list</h2></div><p className="font-glyphs">{glyphs}</p>
       </section>
 
       <section className="font-details" aria-labelledby="font-details-title">
-        <div className="font-details-lead"><span>Technical details</span><h2 id="font-details-title">Ready for the web.</h2><p>Self-host the variable family or install the current release directly from Moriatz.</p><a href={fontFacts.releaseUrl}>Download v{fontFacts.version} <span aria-hidden="true">↗</span></a></div>
+        <div className="font-details-lead"><h2 id="font-details-title">Details</h2><a href={fontFacts.releaseUrl}>Download v{fontFacts.version} <span aria-hidden="true">↗</span></a></div>
         <dl><div><dt>Axis</dt><dd>Weight, 100—700</dd></div><div><dt>Default</dt><dd>500 Dense</dd></div><div><dt>Alignment</dt><dd>720 cap · 520 x-height · 0 baseline</dd></div><div><dt>Coverage</dt><dd>Basic Latin + display punctuation</dd></div><div><dt>Formats</dt><dd>Variable TTF, WOFF2, Regular TTF</dd></div><div><dt>License</dt><dd>SIL Open Font License 1.1</dd></div></dl>
       </section>
     </div>

@@ -1,16 +1,13 @@
 # Strawn Repository Guidance
 
-Strawn is Moriatz's official public React design system.
+Strawn is Moriatz's original variable typeface and its public specimen website.
 
-Use `skills/strawn-design-system/SKILL.md` for foundations, component boundaries, accessibility, testing, and release guidance.
+## Scope
 
-## Public boundary
-
-- `strawn` owns generic components, tokens, themes, providers, and styling utilities.
-- `strawn-icons` owns all SVG icon components and attribution.
-- Product, marketing, Markdown, AI, commerce, account, collaboration, integration, and app-shell UI belongs in consuming applications.
-- Public packages expose only their root entrypoint.
+- Keep this repository focused on the Strawn font and its specimen.
+- Do not add component, icon, token, theme, or design-system packages.
+- Preserve the canonical font family name, weight axis, metrics, download link, and accessibility of the specimen tools.
 
 ## Delivery
 
-Use reviewed pull requests. Publishing and documentation deployment happen only through GitHub Actions after all required checks pass.
+Use reviewed pull requests. Production deployment happens only through GitHub Actions after all required checks pass.

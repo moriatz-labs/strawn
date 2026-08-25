@@ -31,12 +31,10 @@ jobs:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-${{ runner.arch }}-bun-${{ env.BUN_VERSION }}-${{ hashFiles('bun.lock') }}
       - run: bun install --frozen-lockfile
-      - name: Lint, typecheck, generated files, API, and motion
+      - name: Lint, typecheck, and motion
         run: |
-          time bun run icons:check
           time bun run lint
           time bun run typecheck
-          time bun run quality:api
           time bun run quality:motion
 
   unit:
@@ -73,15 +71,12 @@ jobs:
       - run: bun install --frozen-lockfile
       - run: time bun run build
       - run: time bun run docs:vercel-output
-      - run: time bun run quality:packages
       - run: time bun run quality:bundle
       - uses: actions/upload-artifact@v4
         with:
           name: build-output
           path: |
             apps/docs/dist
-            packages/strawn/dist
-            packages/strawn-icons/dist
             .vercel/output
           include-hidden-files: true
           if-no-files-found: error

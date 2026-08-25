@@ -4,9 +4,7 @@
   "version": "0.1.6",
   "type": "module",
   "scripts": {
-    "predev": "bun run --cwd ../.. build:packages",
     "dev": "vite",
-    "prebuild": "bun run --cwd ../.. build:packages",
     "typecheck": "tsc --noEmit",
     "build": "bun run typecheck && vite build",
     "preview": "vite preview"
@@ -18,13 +16,8 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.18.2",
-    "strawn": "workspace:*",
-    "strawn-icons": "workspace:*",
-    "three": "^0.185.1",
     "typescript": "^5.9.3",
     "vite": "^7.3.0"
   },
-  "devDependencies": {
-    "@types/three": "^0.185.4"
-  }
+  "devDependencies": {}
 }
