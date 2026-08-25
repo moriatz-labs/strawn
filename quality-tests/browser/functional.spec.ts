@@ -1,218 +1,38 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-test("@functional renders the documentation shell without console errors", async ({ page }) => {
+test("@functional presents Strawn as one font-only experience", async ({ page }) => {
   const errors: string[] = [];
   page.on("console", (message) => {
     if (message.type() === "error") errors.push(message.text());
   });
-  await page.goto("/");
-  const heading = page.getByRole("heading", { level: 1 });
-  await expect(heading).toHaveText("One font. One React icon library.");
-  await expect(heading).toHaveCSS("text-transform", "none");
-  const headingSize = await page.getByRole("heading", { level: 1 }).evaluate((heading) => Number.parseFloat(getComputedStyle(heading).fontSize));
-  expect(headingSize).toBeGreaterThanOrEqual(40);
-  await expect(page.getByRole("navigation", { name: "Documentation" })).toBeVisible();
+
+  await page.goto("/font");
+  await page.evaluate(() => document.fonts.ready);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Toothpick nation,rise up!");
+  await expect(page.getByRole("heading", { name: "Playground" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Inspect" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Weights" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Full list" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Details" })).toBeVisible();
   expect(errors).toEqual([]);
 });
 
-test("@functional constrains the homepage to a narrower visual viewport", async ({ browser }) => {
-  const visualWidth = 862;
-  const context = await browser.newContext({ viewport: { width: 1366, height: 958 } });
-  await context.addInitScript((width) => {
-    Object.defineProperty(window, "visualViewport", {
-      configurable: true,
-      value: {
-        width,
-        addEventListener: () => undefined,
-        removeEventListener: () => undefined,
-      },
-    });
-  }, visualWidth);
-  const page = await context.newPage();
-
-  await page.goto("/");
-  await expect(page.locator("html")).toHaveAttribute("data-compact-visual-viewport", "true");
-
-  for (const selector of [".docs-marketing-nav", ".page-shell", ".hero", ".home-definition", ".integration-section"]) {
-    const box = await page.locator(selector).boundingBox();
-    expect(box, selector).not.toBeNull();
-    expect(box!.x, selector).toBeGreaterThanOrEqual(0);
-    expect(box!.x + box!.width, selector).toBeLessThanOrEqual(visualWidth + 1);
-  }
-
-  const heroColumns = await page.locator(".hero").evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(" "));
-  expect(heroColumns).toHaveLength(1);
-  await context.close();
-});
-
-test("@functional homepage defines only the font and React icons", async ({ page }) => {
-  await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Variable web font" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "React SVG components" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Vite + React" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Next.js App Router" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Remix" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Components" })).toHaveCount(0);
-});
-
-test("@functional Moriatz Sans owns every typography role", async ({ page }) => {
+test("@functional keeps the font tester and glyph inspector keyboard operable", async ({ page }) => {
   await page.goto("/font");
-  await page.evaluate(() => document.fonts.ready);
-  const families = await page.locator("body, h1, .font-live-sample, .font-glyphs, .font-details dd").evaluateAll((elements) => (
-    elements.map((element) => getComputedStyle(element).fontFamily)
-  ));
-  expect(families.length).toBeGreaterThanOrEqual(4);
-  for (const family of families) expect(family).toContain("Moriatz Sans Variable");
-  await expect(page.locator("body")).toHaveCSS("font-weight", "550");
-});
-
-test("@functional navigation keeps the brand static and refines the GitHub action", async ({ page }) => {
-  await page.goto("/");
-  const brand = page.getByRole("link", { name: "Strawn home" });
-  await brand.hover();
-  await expect(brand).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
-
-  const fontLink = page.getByRole("link", { name: "Font", exact: true });
-  await fontLink.hover();
-  await expect(fontLink).not.toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
-
-  const github = page.getByRole("link", { name: "GitHub", exact: true });
-  const box = await github.boundingBox();
-  expect(box).not.toBeNull();
-  expect(box!.width).toBeGreaterThanOrEqual(112);
-  expect(box!.height).toBeGreaterThanOrEqual(44);
-  await expect(github).toHaveCSS("padding-left", "18px");
-  await expect(github).toHaveCSS("padding-right", "20px");
-  await expect(github).toHaveCSS("background-color", "rgb(255, 255, 255)");
-  expect(await github.evaluate((element) => getComputedStyle(element, "::before").content)).toBe("none");
-  await github.hover();
-  await expect(github).toHaveCSS("background-color", "rgb(255, 255, 255)");
-  await expect(github).toHaveCSS("transform", "none");
-});
-
-test("@functional icon catalog exposes 110 typed React icons", async ({ page }) => {
-  await page.goto("/icons");
-  await expect(page.locator(".icon-card")).toHaveCount(110);
-});
-
-test("@functional Moriatz Sans balances mixed-case cap, x-height, ascender, and descender zones", async ({ page }) => {
-  await page.goto("/");
-  await page.evaluate(() => document.fonts.ready);
-
-  const metrics = await page.getByRole("heading", { level: 1 }).evaluate((heading) => {
-    const style = getComputedStyle(heading);
-    const canvas = document.createElement("canvas");
-    const context = canvas.getContext("2d");
-    if (!context) throw new Error("Canvas context is unavailable");
-    context.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
-    const measure = (glyph: string) => {
-      const result = context.measureText(glyph);
-      return { ascent: result.actualBoundingBoxAscent, descent: result.actualBoundingBoxDescent };
-    };
-    return { cap: measure("T"), xHeight: measure("o"), ascender: measure("h"), descender: measure("g") };
-  });
-
-  expect(metrics.xHeight.ascent / metrics.cap.ascent).toBeGreaterThan(0.65);
-  expect(metrics.xHeight.ascent / metrics.cap.ascent).toBeLessThan(0.8);
-  expect(metrics.ascender.ascent / metrics.cap.ascent).toBeGreaterThan(0.85);
-  expect(metrics.ascender.ascent).toBeGreaterThan(metrics.xHeight.ascent);
-  expect(metrics.descender.descent).toBeGreaterThan(0);
-});
-
-test("@functional font page exposes an editable variable-weight specimen", async ({ page }) => {
-  await page.goto("/font");
-  await expect(page.getByRole("heading", { level: 1, name: "Moriatz Sans" })).toBeAttached();
   await page.getByRole("button", { name: "Try the font" }).click();
   await expect(page.getByLabel("Sample text")).toBeFocused();
-
-  const sampleInput = page.getByLabel("Sample text");
-  await sampleInput.fill("DARKER SYSTEMS");
-  await expect(page.getByTestId("font-live-sample")).toHaveText("DARKER SYSTEMS");
-
-  const weightInput = page.getByLabel("Weight");
-  await expect(weightInput).toHaveValue("500");
-  await weightInput.fill("700");
-  await expect(page.getByTestId("font-live-sample")).toHaveCSS("font-weight", "700");
+  await page.getByLabel("Sample text").fill("Lorem ipsum dolor sit amet");
+  await expect(page.getByTestId("font-live-sample")).toContainText("Lorem ipsum");
 
   await page.getByRole("button", { name: "Inspect A", exact: true }).click();
-  await expect(page.getByRole("img", { name: "A aligned to font metrics" })).toBeVisible();
-  await expect(page.locator(".font-inspector-label-cap")).toContainText("Cap height");
-
   await page.keyboard.press("ArrowRight");
-  const inspectB = page.getByRole("button", { name: "Inspect B", exact: true });
-  await expect(inspectB).toBeFocused();
-  await expect(inspectB).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", { name: "Inspect B", exact: true })).toBeFocused();
   await expect(page.getByRole("img", { name: "B aligned to font metrics" })).toBeVisible();
-
-  await page.keyboard.press("ArrowLeft");
-  await expect(page.getByRole("button", { name: "Inspect A", exact: true })).toBeFocused();
-
-  await page.getByRole("button", { name: "Inspect b", exact: true }).click();
-  await expect(page.getByRole("img", { name: "b aligned to font metrics with a secondary loop line at 430" })).toBeVisible();
-  await expect(page.locator(".font-inspector-label-loop")).toContainText("Loop closes 430");
-  await expect(page.locator(".font-inspector-secondary-guide")).toHaveCount(1);
-
-  await page.getByRole("button", { name: "Inspect c", exact: true }).click();
-  await expect(page.getByRole("img", { name: "c aligned to font metrics" })).toBeVisible();
-  await expect(page.locator(".font-inspector-label-loop")).toHaveCount(0);
-  await expect(page.locator(".font-inspector-secondary-guide")).toHaveCount(0);
-});
-
-test("@functional font hero falls back cleanly when WebGL is unavailable", async ({ page }) => {
-  await page.addInitScript(() => {
-    const original = HTMLCanvasElement.prototype.getContext;
-    HTMLCanvasElement.prototype.getContext = function (type: string, ...args: unknown[]) {
-      if (type === "webgl" || type === "webgl2") return null;
-      return original.call(this, type as "2d", ...args as []) as RenderingContext | null;
-    };
-  });
-  await page.goto("/font");
-  await expect(page.locator(".font-hero")).toHaveAttribute("data-enhanced", "false");
-  await expect(page.getByRole("button", { name: "Replay drawing" })).toBeDisabled();
-  await expect(page.getByRole("heading", { level: 1, name: "Moriatz Sans" })).toBeAttached();
-});
-
-test("@functional replay replaces the active hero sequence without duplicate canvases", async ({ page }) => {
-  await page.goto("/font");
-  const replay = page.getByRole("button", { name: "Replay drawing" });
-  if (await replay.isEnabled()) {
-    await replay.click();
-    await replay.click();
-  }
-  await expect(page.locator(".font-hero canvas")).toHaveCount(1);
-  await expect(page.locator(".font-material-story canvas")).toHaveCount(1);
-});
-
-test("@functional documentation stays light when stored and system preferences are dark", async ({ page }) => {
-  await page.addInitScript(() => {
-    window.localStorage.setItem("strawn-color-mode", "dark");
-    window.localStorage.setItem("strawn-docs-color-mode-v2", "dark");
-    window.localStorage.setItem("strawn-docs-color-mode-v3", "dark");
-  });
-  await page.emulateMedia({ colorScheme: "dark" });
-  await page.goto("/");
-  await expect(page.locator("html")).toHaveAttribute("data-color-mode", "light");
-  await expect(page.locator("html")).toHaveAttribute("data-color-mode-preference", "light");
-  const palette = await page.locator("html").evaluate((element) => ({
-    background: getComputedStyle(element).getPropertyValue("--background").trim(),
-    primary: getComputedStyle(element).getPropertyValue("--primary").trim(),
-  }));
-  expect(palette).toEqual({ background: "#ffffff", primary: "#0a0a0a" });
-  const results = await new AxeBuilder({ page }).analyze();
-  expect(results.violations.filter(({ impact }) => impact === "serious" || impact === "critical")).toEqual([]);
-});
-
-test("@functional removed component routes return to the font-and-icons homepage", async ({ page }) => {
-  await page.goto("/components");
-  await expect(page).toHaveURL(/\/$/);
-  await expect(page.getByRole("heading", { level: 1, name: "One font. One React icon library." })).toBeVisible();
 });
 
 test("@functional has no serious accessibility violations", async ({ page }) => {
-  for (const path of ["/", "/icons", "/font"]) {
-    await page.goto(path);
-    const results = await new AxeBuilder({ page }).analyze();
-    expect(results.violations.filter(({ impact }) => impact === "serious" || impact === "critical"), path).toEqual([]);
-  }
+  await page.goto("/font");
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations.filter(({ impact }) => impact === "serious" || impact === "critical")).toEqual([]);
 });

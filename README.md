@@ -1,32 +1,32 @@
 # Strawn
 
-Strawn — Moriatz’s official design system. Accessible React components, typed themes, and a focused icon library.
+Strawn is Moriatz's original variable typeface. This repository contains the font and its public specimen.
 
-```sh
-bun add strawn strawn-icons
-```
+Every character is constructed from tapered geometric strokes inspired by toothpicks: pointed at the ends, dense through the middle, and recognizable at both interface and display sizes.
 
-```tsx
-import { Button, ThemeProvider } from "strawn";
-import { DownloadIcon } from "strawn-icons";
+Strawn is the shared typographic voice across Moriatz products. It is used for navigation, controls, body copy, data, and large brand moments so every product speaks with the same visual rhythm.
 
-export function App() {
-  return (
-    <ThemeProvider>
-      <Button leftIcon={<DownloadIcon aria-hidden="true" />}>Import CSV</Button>
-    </ThemeProvider>
-  );
+[View the Strawn specimen](https://strawn.moriatz.com/font)
+
+## Font
+
+- Variable weight axis: `100–700`
+- Default weight: `500 Dense`
+- Formats: variable WOFF2, variable TTF, and Regular TTF
+- Coverage: Basic Latin, numerals, and display punctuation
+- License: SIL Open Font License 1.1
+
+```css
+@font-face {
+  font-family: "Strawn";
+  src: url("./Strawn-Variable.woff2") format("woff2-variations");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 100 700;
 }
 ```
 
-## Packages
-
-- `strawn`: components, tokens, themes, styling utilities, and providers.
-- `strawn-icons`: tree-shakeable interface and brand icons.
-
-The repository intentionally excludes application shells, marketing sections, Markdown renderers, commerce, AI, account, collaboration, and integration-specific UI.
-
-## Development
+## Website development
 
 ```sh
 bun install
@@ -34,9 +34,4 @@ bun run docs:dev
 bun run quality
 ```
 
-Releases are managed by Changesets and published from GitHub Actions with npm provenance. See [the release runbook](docs/RELEASING.md) for the one-time bootstrap and token-free trusted-publishing flow.
-
-## License
-
-MIT. Icon attribution and trademark notices are documented in `packages/strawn-icons/THIRD_PARTY_NOTICES.md`.
-Strawn — Moriatz’s official design system.
+The public specimen is served from `/font`. Production releases are verified and deployed to [strawn.moriatz.com/font](https://strawn.moriatz.com/font) through GitHub Actions.
