@@ -18,6 +18,14 @@ test("@functional presents Strawn as one font-only experience", async ({ page })
   expect(errors).toEqual([]);
 });
 
+test("@functional redirects former design-system routes to the font", async ({ page }) => {
+  for (const route of ["/", "/components", "/icons", "/theming", "/nav-lab"]) {
+    await page.goto(route);
+    await expect(page).toHaveURL(/\/font$/);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Toothpick nation,rise up!");
+  }
+});
+
 test("@functional keeps the font tester and glyph inspector keyboard operable", async ({ page }) => {
   await page.goto("/font");
   await page.getByRole("button", { name: "Try the font" }).click();

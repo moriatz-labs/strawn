@@ -1,9 +1,12 @@
 import { useEffect } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
 import { FontPage } from "../../features/font/FontPage";
 
 export function DocsLayout() {
   useEffect(() => {
+    if (window.location.pathname !== "/font") {
+      window.history.replaceState(null, "", "/font");
+    }
+
     const root = document.documentElement;
     const visualViewport = window.visualViewport;
 
@@ -45,11 +48,7 @@ export function DocsLayout() {
         </nav>
       </header>
       <main id="main" className="page-shell">
-        <Routes>
-          <Route path="/" element={<Navigate to="/font" replace />} />
-          <Route path="/font" element={<FontPage />} />
-          <Route path="*" element={<Navigate to="/font" replace />} />
-        </Routes>
+        <FontPage />
       </main>
     </>
   );
