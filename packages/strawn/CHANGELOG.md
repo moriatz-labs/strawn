@@ -1,5 +1,12 @@
 # strawn
 
+## 0.5.2
+
+### Patch Changes
+
+- 9985eaf: Increase the default Moriatz Sans interface weights for darker, more legible typography.
+- 4bd7740: Increase the default Moriatz Sans typography weights for stronger interface legibility.
+
 ## 0.5.1
 
 ### Patch Changes

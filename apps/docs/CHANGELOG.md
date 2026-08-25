@@ -1,5 +1,13 @@
 # strawn-docs
 
+## 0.1.7
+
+### Patch Changes
+
+- Updated dependencies [9985eaf]
+- Updated dependencies [4bd7740]
+  - strawn@0.5.2
+
 ## 0.1.6
 
 ### Patch Changes
