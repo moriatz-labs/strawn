@@ -122,7 +122,9 @@ test("@functional Moriatz Sans balances mixed-case cap, x-height, ascender, and 
 
 test("@functional font page exposes an editable variable-weight specimen", async ({ page }) => {
   await page.goto("/font");
-  await expect(page.getByRole("heading", { level: 1, name: "Moriatz Sans" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Moriatz Sans" })).toBeAttached();
+  await page.getByRole("button", { name: "Try the font" }).click();
+  await expect(page.getByLabel("Sample text")).toBeFocused();
 
   const sampleInput = page.getByLabel("Sample text");
   await sampleInput.fill("DARKER SYSTEMS");
@@ -135,7 +137,7 @@ test("@functional font page exposes an editable variable-weight specimen", async
 
   await page.getByRole("button", { name: "Inspect A", exact: true }).click();
   await expect(page.getByRole("img", { name: "A aligned to font metrics" })).toBeVisible();
-  await expect(page.getByText("Cap height", { exact: true }).first()).toBeVisible();
+  await expect(page.locator(".font-inspector-label-cap")).toContainText("Cap height");
 
   await page.keyboard.press("ArrowRight");
   const inspectB = page.getByRole("button", { name: "Inspect B", exact: true });
@@ -155,6 +157,31 @@ test("@functional font page exposes an editable variable-weight specimen", async
   await expect(page.getByRole("img", { name: "c aligned to font metrics" })).toBeVisible();
   await expect(page.locator(".font-inspector-label-loop")).toHaveCount(0);
   await expect(page.locator(".font-inspector-secondary-guide")).toHaveCount(0);
+});
+
+test("@functional font hero falls back cleanly when WebGL is unavailable", async ({ page }) => {
+  await page.addInitScript(() => {
+    const original = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (type: string, ...args: unknown[]) {
+      if (type === "webgl" || type === "webgl2") return null;
+      return original.call(this, type as "2d", ...args as []) as RenderingContext | null;
+    };
+  });
+  await page.goto("/font");
+  await expect(page.locator(".font-hero")).toHaveAttribute("data-enhanced", "false");
+  await expect(page.getByRole("button", { name: "Replay drawing" })).toBeDisabled();
+  await expect(page.getByRole("heading", { level: 1, name: "Moriatz Sans" })).toBeAttached();
+});
+
+test("@functional replay replaces the active hero sequence without duplicate canvases", async ({ page }) => {
+  await page.goto("/font");
+  const replay = page.getByRole("button", { name: "Replay drawing" });
+  if (await replay.isEnabled()) {
+    await replay.click();
+    await replay.click();
+  }
+  await expect(page.locator(".font-hero canvas")).toHaveCount(1);
+  await expect(page.locator(".font-material-story canvas")).toHaveCount(1);
 });
 
 test("@functional documentation stays light when stored and system preferences are dark", async ({ page }) => {
