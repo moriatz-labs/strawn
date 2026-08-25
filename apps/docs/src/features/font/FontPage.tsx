@@ -10,6 +10,8 @@ const weightSpecimens = [
 
 const glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 !?@#%&·–—";
 const inspectorGlyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.!?";
+const secondaryLoopGlyphs = "bdhpq";
+const secondaryLoopHeight = 430;
 const fontMetrics = [
   { label: "Cap height", value: 720 },
   { label: "X-height", value: 520 },
@@ -23,6 +25,7 @@ export function FontPage() {
   const [spacing, setSpacing] = useState(4);
   const [sample, setSample] = useState("Moriatz Sans");
   const [inspectedGlyph, setInspectedGlyph] = useState("T");
+  const hasSecondaryLoopGuide = secondaryLoopGlyphs.includes(inspectedGlyph);
   const variableStyle = {
     fontVariationSettings: `"wght" ${weight}`,
     fontWeight: weight,
@@ -76,25 +79,35 @@ export function FontPage() {
           <span>01</span>
           <div>
             <h2 id="font-inspector-title">Interactive glyph inspector</h2>
-            <p>Select any glyph to verify its cap line, x-height, baseline, and descender.</p>
+            <p>Select any glyph to verify its metrics and relevant construction lines.</p>
           </div>
         </div>
         <div className="font-inspector-stage">
-          <svg viewBox="0 -820 1000 1040" role="img" aria-label={`${inspectedGlyph} aligned to font metrics`}>
+          <svg
+            viewBox="0 -820 1000 1040"
+            role="img"
+            aria-label={`${inspectedGlyph} aligned to font metrics${hasSecondaryLoopGuide ? ` with a secondary loop line at ${secondaryLoopHeight}` : ""}`}
+          >
             <title>{inspectedGlyph} alignment inspector</title>
             <g className="font-inspector-guides" aria-hidden="true">
               <line x1="0" x2="1000" y1="-720" y2="-720" />
               <line x1="0" x2="1000" y1="-520" y2="-520" />
               <line x1="0" x2="1000" y1="0" y2="0" />
               <line x1="0" x2="1000" y1="220" y2="220" />
+              {hasSecondaryLoopGuide ? (
+                <line className="font-inspector-secondary-guide" x1="0" x2="1000" y1={-secondaryLoopHeight} y2={-secondaryLoopHeight} />
+              ) : null}
             </g>
             <text className="font-inspector-glyph" x="500" y="0" textAnchor="middle" style={variableStyle}>{inspectedGlyph}</text>
           </svg>
           <div className="font-inspector-labels" aria-hidden="true">
-            <span>Cap height <b>720</b></span>
-            <span>X-height <b>520</b></span>
-            <span>Baseline <b>0</b></span>
-            <span>Descender <b>−220</b></span>
+            <span className="font-inspector-label-cap">Cap height <b>720</b></span>
+            <span className="font-inspector-label-x-height">X-height <b>520</b></span>
+            {hasSecondaryLoopGuide ? (
+              <span className="font-inspector-label-loop">Loop closes <b>{secondaryLoopHeight}</b></span>
+            ) : null}
+            <span className="font-inspector-label-baseline">Baseline <b>0</b></span>
+            <span className="font-inspector-label-descender">Descender <b>−220</b></span>
           </div>
         </div>
         <div className="font-inspector-grid" role="toolbar" aria-label="Choose a glyph">

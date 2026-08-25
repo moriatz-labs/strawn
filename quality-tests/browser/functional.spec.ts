@@ -145,6 +145,16 @@ test("@functional font page exposes an editable variable-weight specimen", async
 
   await page.keyboard.press("ArrowLeft");
   await expect(page.getByRole("button", { name: "Inspect A", exact: true })).toBeFocused();
+
+  await page.getByRole("button", { name: "Inspect b", exact: true }).click();
+  await expect(page.getByRole("img", { name: "b aligned to font metrics with a secondary loop line at 430" })).toBeVisible();
+  await expect(page.locator(".font-inspector-label-loop")).toContainText("Loop closes 430");
+  await expect(page.locator(".font-inspector-secondary-guide")).toHaveCount(1);
+
+  await page.getByRole("button", { name: "Inspect c", exact: true }).click();
+  await expect(page.getByRole("img", { name: "c aligned to font metrics" })).toBeVisible();
+  await expect(page.locator(".font-inspector-label-loop")).toHaveCount(0);
+  await expect(page.locator(".font-inspector-secondary-guide")).toHaveCount(0);
 });
 
 test("@functional documentation stays light when stored and system preferences are dark", async ({ page }) => {
