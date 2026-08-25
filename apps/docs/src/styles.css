@@ -926,6 +926,11 @@ html[data-compact-visual-viewport="true"] .principles {
   vector-effect: non-scaling-stroke;
 }
 
+.font-inspector-guides .font-inspector-secondary-guide {
+  stroke-dasharray: 2 5;
+  stroke-opacity: 0.58;
+}
+
 .font-inspector-glyph {
   fill: #050505;
   font-family: var(--font-heading);
@@ -949,10 +954,15 @@ html[data-compact-visual-viewport="true"] .principles {
   transform: translateY(-100%);
 }
 
-.font-inspector-labels span:nth-child(1) { top: 9.62%; }
-.font-inspector-labels span:nth-child(2) { top: 28.85%; }
-.font-inspector-labels span:nth-child(3) { top: 78.85%; }
-.font-inspector-labels span:nth-child(4) { top: 100%; }
+.font-inspector-label-cap { top: 9.62%; }
+.font-inspector-label-x-height { top: 28.85%; }
+.font-inspector-label-loop { top: 37.5%; }
+.font-inspector-label-baseline { top: 78.85%; }
+.font-inspector-label-descender { top: 100%; }
+
+.font-inspector-labels .font-inspector-label-loop {
+  color: #303030;
+}
 
 .font-inspector-labels b { color: #050505; font-weight: var(--type-weight-semibold); }
 
