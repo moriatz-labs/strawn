@@ -51,7 +51,7 @@ export function FontPage() {
         <div className="font-page-meta">
           <span>Moriatz Sans</span>
           <span>Variable 100—700</span>
-          <span>Version 0.6</span>
+          <span>Version 0.6.1</span>
         </div>
         <h1 aria-label="Moriatz Sans">
           <span>MORIATZ</span>
