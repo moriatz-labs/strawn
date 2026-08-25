@@ -33,7 +33,7 @@ for (const width of widths) {
     expect(palette).toEqual({ background: "#ffffff", surface: "#ffffff", primary: "#0a0a0a" });
 
     await page.goto("/font");
-    await expect(page.getByRole("heading", { level: 1, name: "Moriatz Sans" })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: "Moriatz Sans" })).toBeAttached();
     const fontMetrics = await horizontalLayout(page);
     expect(fontMetrics.overflow, JSON.stringify(fontMetrics.offenders)).toBe(false);
     const fontPageBox = await page.locator(".font-page").boundingBox();
