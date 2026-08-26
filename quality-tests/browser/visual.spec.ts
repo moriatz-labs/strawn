@@ -23,6 +23,24 @@ for (const width of widths) {
   });
 }
 
+for (const width of [320, 375]) {
+  test(`@visual ${width}px inspector metrics do not overlap`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto("/font");
+    const layout = await page.evaluate(() => {
+      const labels = [...document.querySelectorAll<HTMLElement>(".font-inspector-labels span")]
+        .map((label) => label.getBoundingClientRect());
+      const svg = document.querySelector<SVGElement>(".font-inspector-stage svg")?.getBoundingClientRect();
+      const overlaps = labels.some((first, index) => labels.slice(index + 1).some((second) =>
+        first.left < second.right && first.right > second.left && first.top < second.bottom && first.bottom > second.top
+      ));
+      return { overlaps, labelsBottom: Math.max(...labels.map(({ bottom }) => bottom)), svgTop: svg?.top ?? 0 };
+    });
+    expect(layout.overlaps).toBe(false);
+    expect(layout.labelsBottom).toBeLessThanOrEqual(layout.svgTop);
+  });
+}
+
 for (const width of [1440, 1920]) {
   test(`@visual ${width}px hero aligns optically with the navbar label`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1000 });
