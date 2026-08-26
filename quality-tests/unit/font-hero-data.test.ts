@@ -6,6 +6,8 @@ describe("Strawn font facts", () => {
     expect(fontFacts.family).toBe("Strawn");
     expect(fontFacts.defaultWeight).toBe(500);
     expect(fontFacts.variableLabel).toBe("Variable 100—700");
+    expect(fontFacts.version).toBe("0.7.0");
+    expect(fontFacts.characterCount).toBe(319);
     expect(fontFacts.metrics).toEqual([
       { label: "Cap height", value: 720 },
       { label: "X-height", value: 520 },

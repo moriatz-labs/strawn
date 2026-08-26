@@ -16,7 +16,7 @@ export function FontHero() {
       <div className="font-hero-footer">
         <div className="font-hero-actions">
           <button type="button" className="font-hero-primary" onClick={tryFont}>Try the font</button>
-          <a href={fontFacts.releaseUrl}>Download v{fontFacts.version} <span aria-hidden="true">↗</span></a>
+          <a href={fontFacts.downloadUrl} download>Download v{fontFacts.version} <span aria-hidden="true">↓</span></a>
         </div>
       </div>
     </header>
